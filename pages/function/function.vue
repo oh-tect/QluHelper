@@ -83,6 +83,9 @@
 				]
 			}
 		},
+		onLoad() {
+			console.log("是否登录:" + getApp().globalData.isLogin);
+		},
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
@@ -90,9 +93,15 @@
 						url: '/pages/index/index'
 					});
 				} else if (e == 2) {
-					uni.redirectTo({
-						url: '/pages/login/login'
-					});
+					if (getApp().globalData.isLogin == 0) {
+						uni.redirectTo({
+							url: '/pages/login/login'
+						});
+					} else {
+						uni.redirectTo({
+							url: '/pages/userInfo/userInfo'
+						});
+					}
 				}
 			},
 			click1: function() {

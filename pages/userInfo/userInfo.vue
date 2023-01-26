@@ -29,7 +29,7 @@
 						<text slot="footer"></text>
 					</uni-list-item>
 				</uni-list>
-				<button type="primary">退出登录</button>
+				<button type="primary" @click="logout">退出登录</button>
 				<!-- <view class="items">
 					<view class="item">
 						<view class="label">
@@ -82,6 +82,7 @@
 			}
 		},
 		onLoad() {
+			console.log("是否登录:" + getApp().globalData.isLogin);
 			let username = uni.getStorageSync("username");
 			let token = uni.getStorageSync('token');
 			let that = this;
@@ -130,6 +131,17 @@
 						url: '/pages/function/function'
 					})
 				}
+			},
+			logout: function() {
+				uni.removeStorageSync('token');
+				getApp().globalData.isLogin = 0;
+				uni.showToast({
+					title: "注销成功！",
+					duration: 3000
+				});
+				uni.redirectTo({
+					url: '/pages/login/login'
+				});
 			}
 		}
 	}

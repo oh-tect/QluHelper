@@ -44,11 +44,14 @@
 			<uni-card>
 				<template v-slot:title>
 					<uni-list>
-						<uni-section title="呵呵哒" type="line"></uni-section>
+						<uni-section title="每日诗词" type="line"></uni-section>
 					</uni-list>
 				</template>
 				<view class="saying">
 					<text>{{saying}}</text>
+				</view>
+				<view class="from">
+					<text>{{author}} 《{{origin}}》</text>
 				</view>
 			</uni-card>
 		</view>
@@ -89,7 +92,6 @@
 		</view>
 	</view>
 </template>
-
 <script>
 	// import {
 	// 	getKaoyan_date
@@ -101,6 +103,8 @@
 				value1: 0,
 				timeData: {},
 				saying: '',
+				author: '',
+				origin: '',
 				weather: [],
 				high: [],
 				low: [],
@@ -110,14 +114,15 @@
 			}
 		},
 		onLoad() {
-			console.log(getApp().globalData.isLogin);
+			console.log("是否登录:" + getApp().globalData.isLogin);
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
 			new Promise((resolve, reject) => {
 				uni.request({
-					url: 'https://api.uixsj.cn/hitokoto/get',
+					url: 'https://v1.jinrishici.com/all.json',
 					method: 'GET',
 					success: (e) => {
+						console.log(e)
 						resolve(e);
 					},
 					fail: () => {
@@ -125,7 +130,9 @@
 						reject();
 					},
 					complete: (e) => {
-						this.saying = e.data;
+						this.saying = e.data['content'];
+						this.author = e.data['author'];
+						this.origin = e.data['origin'];
 					}
 				});
 			});
@@ -151,13 +158,10 @@
 							this.weather_data.push(data);
 						}
 						for (let i of this.weather_data) {
-
-
 							this.weather.push(i[0]);
 							this.high.push(i[1]);
 							this.low.push(i[2]);
 							this.code.push(i[3]);
-
 						}
 						console.log(this.weather_data);
 						console.log(this.code);
@@ -174,11 +178,17 @@
 				if (e === 1) {
 					uni.redirectTo({
 						url: '/pages/function/function'
-					})
+					});
 				} else if (e == 2) {
-					uni.redirectTo({
-						url: '/pages/login/login'
-					})
+					if (getApp().globalData.isLogin == 0) {
+						uni.redirectTo({
+							url: '/pages/login/login'
+						});
+					} else {
+						uni.redirectTo({
+							url: '/pages/userInfo/userInfo'
+						});
+					}
 				}
 			},
 			onChange: function(e) {
@@ -265,7 +275,9 @@
 		color: #2f3640;
 	}
 
-	.author {
+	.from {
+		margin-top: 10px;
+		color: #2f3640;
 		text-align: end;
 	}
 </style>
