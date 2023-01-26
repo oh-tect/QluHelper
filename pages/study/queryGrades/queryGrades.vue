@@ -26,10 +26,11 @@
 				<view class="credit">
 					<uni-card class="card" margin="8px" :is-shadow="false">
 						<view class="title">
-							<text>当前学分</text>
+							<text>当前总绩点</text>
 						</view>
 						<view class="number">
-							<u-count-to :startVal="0" decimals="1" :endVal="4.9" fontSize="50px"></u-count-to>
+							<u-count-to :startVal="0" decimals="2" :endVal="getGenaralGPA()" fontSize="50px">
+							</u-count-to>
 						</view>
 					</uni-card>
 				</view>
@@ -58,39 +59,50 @@
 			let username = uni.getStorageSync('username');
 			let semesters = this.semester;
 			console.log(semesters);
+			console.log(token);
 			console.log("获取token成功");
 			let that = this;
-			new Promise((resolve, reject) => {
-				uni.request({
-					url: 'http://jwxt.qlu.edu.cn/app.do',
-					method: 'GET',
-					data: {
-						'method': 'getCjcx',
-						'xh': username,
-						'xnxqid': that.semester
-					},
-					header: {
-						'token': token
-					},
-					success: (re) => {
-						console.log(re);
-						for (let item of re.data) {
-							let list = [];
-							list.push(item['kcmc']);
-							list.push(item['kclbmc']);
-							list.push(item['zcj']);
-							list.push(item['xf']);
-							that.grades.push(list);
+			try {
+				new Promise((resolve, reject) => {
+					uni.request({
+						url: 'http://jwxt.qlu.edu.cn/app.do',
+						method: 'GET',
+						data: {
+							'method': 'getCjcx',
+							'xh': username,
+							'xnxqid': that.semester
+						},
+						header: {
+							'token': token
+						},
+						success: (re) => {
+							if (JSON.stringify(re).includes('token')) {
+								console.log('token过期');
+								this.$_tokens.mytoken.refreshToken();
+							} else {
+								for (let item of re.data) {
+									let list = [];
+									list.push(item['kcmc']);
+									list.push(item['kclbmc']);
+									list.push(item['zcj']);
+									list.push(item['xf']);
+									that.grades.push(list);
+								}
+								console.log(that.grades);
+								resolve();
+							}
+						},
+						fail: () => {
+							console.log("获取失败");
+							reject();
 						}
-						console.log(that.grades);
-						resolve();
-					},
-					fail: () => {
-						console.log("获取失败");
-						reject();
-					}
-				})
-			})
+					})
+				});
+			} catch (e) {
+				//TODO handle the exception
+				console.log('token过期');
+			}
+
 		},
 		computed: {
 			all_grades: function() {
@@ -100,6 +112,27 @@
 		methods: {
 			change: function(e) {
 				console.log(e.value)
+			},
+			getGPA: function(e) {
+				if (e > 95) {
+					return 5.0;
+				} else {
+					return e / 10.0 - 4.5;
+				}
+			},
+			getGenaralGPA: function() {
+				//sum为学分总和
+				let sum = 0;
+				//sumGPA为绩点乘学分总和
+				let sumGPA = 0;
+				for (let item of this.grades) {
+					sum += item[3];
+					let GPA = this.getGPA(Number(item[2]));
+					sumGPA += GPA * item[3];
+				}
+				console.log("学分总和为 " + sum);
+				//保留一位小数
+				return (sumGPA / sum).toFixed(1);
 			}
 		},
 		components: {

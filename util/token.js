@@ -2,6 +2,8 @@ const refreshToken = async function() {
 	console.log("[开始刷新token...]")
 	let username = uni.getStorageSync('username');
 	let password = uni.getStorageSync('password');
+	console.log('username=' + username);
+	console.log('password=' + password);
 	if (username && password) {
 		uni.request({
 			url: 'http://jwxt.qlu.edu.cn/app.do',
@@ -20,7 +22,7 @@ const refreshToken = async function() {
 			}
 		});
 	} else {
-		console.log("刷新失败");
+		console.log("刷新失败,找不到username和password");
 	}
 }
 

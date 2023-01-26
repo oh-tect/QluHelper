@@ -99,18 +99,22 @@
 						},
 						success: (re) => {
 							console.log(re);
-							console.log(that.studentName);
-							console.log(re.data['yxmc']);
-							this.studentName = re.data['xm'];
-							that.studentID = re.data['xh'];
-							that.department = re.data['yxmc'];
-							that.major = re.data['zymc'];
+							if (JSON.stringify(re).includes('token')) {
+								console.log('token过期');
+								this.$_tokens.mytoken.refreshToken();
+							} else {
+								this.studentName = re.data['xm'];
+								that.studentID = re.data['xh'];
+								that.department = re.data['yxmc'];
+								that.major = re.data['zymc'];
+							}
+
 						}
 					});
 
 				});
 			} else {
-				console.log("获取信息失败");
+				console.log("获取信息失败,没有username和password");
 			}
 
 
