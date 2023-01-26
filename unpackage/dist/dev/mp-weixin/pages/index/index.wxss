@@ -1,0 +1,67 @@
+
+.kaoyan_text {
+	color: #2f3640;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+}
+.countdown {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.time {
+	display: flex;
+	align-items: center;
+}
+.time_custom {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #f5f6fa;
+	background-color: #54a0ff;
+	font-size: 18px;
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+}
+.time_text {
+	color: #2f3640;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.split {
+	display: flex;
+	flex-direction: row;
+}
+.item {
+	flex: 1;
+	padding-top: 10px;
+}
+.icon_class {
+	height: 30px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+.weather_text {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+}
+.weather_number {
+	display: inline-block;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.saying {
+	color: #2f3640;
+}
+.author {
+	text-align: end;
+}
+

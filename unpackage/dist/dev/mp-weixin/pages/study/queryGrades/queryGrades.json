@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "成绩查询",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
+    "hpy-form-select": "/uni_modules/hpy-form-select/components/hpy-form-select/hpy-form-select",
+    "uni-card": "/uni_modules/uni-card/components/uni-card/uni-card",
+    "u-count-to": "/uni_modules/uview-ui/components/u-count-to/u-count-to",
+    "grade-card": "/components/gradeCard/gradeCard"
+  }
+}

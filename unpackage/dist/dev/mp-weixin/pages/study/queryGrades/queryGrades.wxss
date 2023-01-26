@@ -1,0 +1,41 @@
+
+.main {
+	margin: 0 15px 0 15px;
+}
+.setting {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.label {
+	flex: 1;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+}
+.picker {
+	flex: 3;
+}
+.result_info {
+	display: flex;
+	flex-direction: row;
+}
+.all {
+	flex: 1;
+}
+.credit {
+	flex: 1;
+}
+.card {
+	height: 120px;
+}
+.title {
+	text-align: center;
+}
+.number {
+	text-align: center;
+	font-size: 50px;
+	margin-top: 30px;
+}
+

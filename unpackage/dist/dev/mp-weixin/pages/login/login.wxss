@@ -1,0 +1,43 @@
+
+.title {
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+.label {
+	font-weight: normal;
+}
+.login {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 50px;
+}
+.logo_div {
+	text-align: center;
+}
+.logo {
+
+	width: 60px;
+	height: 60px;
+}
+.username {
+	display: inline;
+	margin-top: 20px;
+	margin-left: 10px;
+	padding-bottom: 20px;
+}
+.label {
+	font-size: 15px;
+}
+.password {
+	margin-top: 5px;
+	margin-bottom: 30px;
+}
+.button {
+	background: linear-gradient(to right, #43CBFF, #9708CC);
+	border-radius: 20px;
+}
+.submit {
+	padding-top: 10px;
+}
+

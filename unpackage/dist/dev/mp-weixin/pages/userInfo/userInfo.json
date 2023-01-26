@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "我的",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-tabbar": "/uni_modules/uview-ui/components/u-tabbar/u-tabbar",
+    "u-tabbar-item": "/uni_modules/uview-ui/components/u-tabbar-item/u-tabbar-item",
+    "uni-card": "/uni_modules/uni-card/components/uni-card/uni-card",
+    "uni-list": "/uni_modules/uni-list/components/uni-list/uni-list",
+    "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
+    "uni-list-item": "/uni_modules/uni-list/components/uni-list-item/uni-list-item"
+  }
+}
