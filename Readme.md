@@ -1,5 +1,5 @@
 # 齐工助手 
-<img src="https://img.shields.io/badge/github-oh--tect-red"/> <img src="https://img.shields.io/badge/status-developing-yellow"/> <img src="https://img.shields.io/badge/powered%20by-uni--app-brightgreen"/><br>
+<img src="https://img.shields.io/badge/github-oh--tect-red"/> <img src="https://img.shields.io/badge/status-developing-yellow"/> <img src="https://img.shields.io/badge/powered%20by-uni--app-brightgreen"/> ![Github stars](https://img.shields.io/github/stars/oh-tect/QluHelper.svg)<br>
 齐工助手，一个集成绩查询，空教室查询，课程表等功能为一体的APP/小程序，代码较烂，大佬轻喷😋。
 
 ### 👻实现功能
