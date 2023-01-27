@@ -171,7 +171,6 @@
 				} else {
 					for (let item of this.grades) {
 						//公选不算入绩点
-
 						if (item[1] !== '公选') {
 							sum += item[3];
 							let GPA = this.getGPA(Number(item[2]));
