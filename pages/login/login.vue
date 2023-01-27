@@ -156,7 +156,7 @@
 	.login {
 		margin-left: 20px;
 		margin-right: 20px;
-		margin-top: 50px;
+		margin-top: 40px;
 	}
 
 	.logo_div {
@@ -171,9 +171,9 @@
 
 	.username {
 		display: inline;
-		margin-top: 20px;
+		margin-top: 10px;
 		margin-left: 10px;
-		padding-bottom: 20px;
+		padding-bottom: 30px;
 	}
 
 	.label {
@@ -187,7 +187,7 @@
 
 	.button {
 		background: linear-gradient(to right, #43CBFF, #9708CC);
-		border-radius: 20px;
+		border-radius: 10px;
 	}
 
 	.submit {

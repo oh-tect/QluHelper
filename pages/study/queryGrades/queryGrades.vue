@@ -46,10 +46,11 @@
 
 <script>
 	import gradeCard from '../../../components/gradeCard/gradeCard.vue'
+	let that = this;
 	export default {
 		data() {
 			return {
-				year: ['2020-2021-1', '2020-2021-2', '2021-2022-1', '2021-2022-2'],
+				year: [],
 				grades: [],
 				semester: '2022-2023-1'
 			}
@@ -63,6 +64,41 @@
 			console.log("获取token成功");
 			let that = this;
 			try {
+				//获取所有学期
+				new Promise((resolve, reject) => {
+					uni.request({
+						url: 'http://jwxt.qlu.edu.cn/app.do',
+						method: 'GET',
+						data: {
+							'method': 'getCjcx',
+							'xh': username
+						},
+						header: {
+							'token': token
+						},
+						success: (re) => {
+							if (JSON.stringify(re).includes('token')) {
+								console.log('token过期');
+								this.$_tokens.mytoken.refreshToken();
+							} else {
+								let set = new Set();
+								for (let item of re.data) {
+									set.add(item['xqmc']);
+								}
+								let list = Array.from(set);
+								for (let items of list) {
+									this.year.push(items);
+								}
+								console.log(that.year);
+								resolve();
+							}
+						},
+						fail: () => {
+							console.log("获取失败");
+							reject();
+						}
+					});
+				});
 				new Promise((resolve, reject) => {
 					uni.request({
 						url: 'http://jwxt.qlu.edu.cn/app.do',
@@ -96,13 +132,12 @@
 							console.log("获取失败");
 							reject();
 						}
-					})
+					});
 				});
 			} catch (e) {
 				//TODO handle the exception
 				console.log('token过期');
 			}
-
 		},
 		computed: {
 			all_grades: function() {
@@ -111,7 +146,9 @@
 		},
 		methods: {
 			change: function(e) {
-				console.log(e.value)
+				this.semester = e.value;
+				this.getGrades(e.value);
+				console.log(this.semester);
 			},
 			getGPA: function(e) {
 				if (e > 95) {
@@ -125,15 +162,71 @@
 				let sum = 0;
 				//sumGPA为绩点乘学分总和
 				let sumGPA = 0;
-				for (let item of this.grades) {
-					sum += item[3];
-					let GPA = this.getGPA(Number(item[2]));
-					sumGPA += GPA * item[3];
+				if (this.grades.length == 0) {
+					return 0;
+				} else {
+					for (let item of this.grades) {
+						sum += item[3];
+						let GPA = this.getGPA(Number(item[2]));
+						sumGPA += GPA * item[3];
+					}
+					console.log("学分总和为 " + sum);
+					//保留一位小数
+					return (sumGPA / sum).toFixed(1);
 				}
-				console.log("学分总和为 " + sum);
-				//保留一位小数
-				return (sumGPA / sum).toFixed(1);
-			}
+			},
+			getGrades: function(semester) {
+				let token = uni.getStorageSync('token');
+				let username = uni.getStorageSync('username');
+				let semesters = this.semester;
+				this.grades = [];
+				console.log(semesters);
+				console.log(token);
+				console.log("获取token成功");
+				let that = this;
+				try {
+					//获取所有学期
+					new Promise((resolve, reject) => {
+						uni.request({
+							url: 'http://jwxt.qlu.edu.cn/app.do',
+							method: 'GET',
+							data: {
+								'method': 'getCjcx',
+								'xh': username,
+								'xnxqid': semester
+							},
+							header: {
+								'token': token
+							},
+							success: (re) => {
+								if (JSON.stringify(re).includes('token')) {
+									console.log('token过期');
+									this.$_tokens.mytoken.refreshToken();
+								} else {
+									for (let item of re.data) {
+										let list = [];
+										list.push(item['kcmc']);
+										list.push(item['kclbmc']);
+										list.push(item['zcj']);
+										list.push(item['xf']);
+										that.grades.push(list);
+									}
+									console.log(that.grades);
+									resolve();
+								}
+							},
+							fail: () => {
+								console.log("获取失败");
+								reject();
+							}
+						})
+					});
+				} catch (e) {
+					//TODO handle the exception
+					console.log('token过期');
+				}
+			},
+
 		},
 		components: {
 			gradeCard,
