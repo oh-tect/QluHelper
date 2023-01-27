@@ -59,6 +59,7 @@
 			let token = uni.getStorageSync('token');
 			let username = uni.getStorageSync('username');
 			let semesters = this.semester;
+
 			console.log(semesters);
 			console.log(token);
 			console.log("获取token成功");
@@ -99,7 +100,6 @@
 						}
 					});
 				});
-				//获取成绩
 				new Promise((resolve, reject) => {
 					uni.request({
 						url: 'http://jwxt.qlu.edu.cn/app.do',
