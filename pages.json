@@ -35,6 +35,13 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/study/timetable/timetable",
+			"style": {
+				"navigationBarTitleText": "课程表",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {

@@ -99,6 +99,7 @@
 						}
 					});
 				});
+				//获取成绩
 				new Promise((resolve, reject) => {
 					uni.request({
 						url: 'http://jwxt.qlu.edu.cn/app.do',
@@ -145,6 +146,7 @@
 			}
 		},
 		methods: {
+			//监听选择器事件
 			change: function(e) {
 				this.semester = e.value;
 				this.getGrades(e.value);
@@ -153,8 +155,10 @@
 			getGPA: function(e) {
 				if (e > 95) {
 					return 5.0;
-				} else {
+				} else if (e >= 60) {
 					return e / 10.0 - 4.5;
+				} else {
+					return 0;
 				}
 			},
 			getGenaralGPA: function() {
@@ -166,9 +170,11 @@
 					return 0;
 				} else {
 					for (let item of this.grades) {
-						sum += item[3];
-						let GPA = this.getGPA(Number(item[2]));
-						sumGPA += GPA * item[3];
+						if (item[1] !== '公选') {
+							sum += item[3];
+							let GPA = this.getGPA(Number(item[2]));
+							sumGPA += GPA * item[3];
+						}
 					}
 					console.log("学分总和为 " + sum);
 					//保留一位小数
