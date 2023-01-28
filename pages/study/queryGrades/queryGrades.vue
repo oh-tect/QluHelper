@@ -7,7 +7,7 @@
 					<text>学期:</text>
 				</view>
 				<view class="picker">
-					<hpy-form-select title="请选择" :dataList="year" v-bind:value="1" @change="change" value="0">
+					<hpy-form-select title="默认为最新成绩" :dataList="year" v-bind:value="1" @change="change" value="0">
 					</hpy-form-select>
 				</view>
 			</view>

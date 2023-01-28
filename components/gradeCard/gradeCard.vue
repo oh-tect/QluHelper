@@ -118,14 +118,14 @@
 
 	.card {
 		height: 70px;
-		background-color: rgb(94, 121, 135)
+		background-color: rgb(94, 121, 135);
+		border-radius: 15px;
 	}
 
 	.grade {
 		display: inline-block;
 		margin-left: 10%;
 		font-size: 30px;
-
 	}
 
 
