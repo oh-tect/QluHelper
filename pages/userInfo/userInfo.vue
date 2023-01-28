@@ -8,9 +8,7 @@
 		<view class="userinfo">
 			<uni-card :is-shadow='false' is-full :border="false">
 				<template v-slot:title>
-					<uni-list>
-						<uni-section title="登录信息" type="line"></uni-section>
-					</uni-list>
+					<uni-section title="登录信息" type="line"></uni-section>
 				</template>
 				<uni-list>
 					<uni-list-item title='姓名:'>
@@ -25,29 +23,10 @@
 					<uni-list-item title='专业:'>
 						<text slot="footer">{{major}}</text>
 					</uni-list-item>
-					<uni-list-item title=''>
-						<text slot="footer"></text>
-					</uni-list-item>
 				</uni-list>
-				<button type="primary" @click="logout">退出登录</button>
-				<!-- <view class="items">
-					<view class="item">
-						<view class="label">
-							<text>姓名：</text>
-						</view>
-						<view class="text">
-							素数筛
-						</view>
-					</view>
-					<view class="item">
-						<view class="label">
-							<text>姓名：</text>
-						</view>
-						<view class="text">
-							素数筛
-						</view>
-					</view>
-				</view> -->
+				<wButton text="退出登录" rotate="false" style="margin-top: 10px;" bgColor="rgb(94, 121, 135)"
+					fontColor="#FFFFFF" @click.native="logout()">
+				</wButton>
 			</uni-card>
 			<uni-card :is-shadow="false" is-full :border="false">
 				<uni-list>
@@ -56,9 +35,7 @@
 			</uni-card>
 			<uni-card :is-shadow="false">
 				<template v-slot:title>
-					<uni-list>
-						<uni-section title="注意事项" type="line"></uni-section>
-					</uni-list>
+					<uni-section title="注意事项" type="line"></uni-section>
 				</template>
 				1.本软件系个人业余完成项目，更新时间不定。
 				2.如果数据获取与齐鲁工业大学教务系统有偏差，以齐鲁工业大学教务系统为准。
@@ -68,6 +45,8 @@
 </template>
 
 <script>
+	import wInput from '../../components/watch-login/watch-input.vue'
+	import wButton from '../../components/watch-login/watch-button.vue'
 	import {
 		getKaoyan_date
 	} from '../../util/date';
@@ -119,6 +98,9 @@
 			}
 
 
+		},
+		components: {
+			wButton
 		},
 		methods: {
 			change1: function(e) {

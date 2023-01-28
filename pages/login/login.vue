@@ -11,25 +11,25 @@
 			<view class="logo_div">
 				<image src="/static//icon/ic_launcher_proc_transparent.jpg" class="logo"></image>
 			</view>
-			<!-- <text>登录</text>
-				<view class="label">
-					<text>（使用教务系统账号登录）</text> -->
-			<view class="username">
-				<uni-section type="line" title="学号" class='section'></uni-section>
-				<uni-easyinput type="text" placeholder="请输入学号" v-model="username"></uni-easyinput>
+			<view class="username" style="border-radius: 20px;">
+				<wInput v-model="username" type="text" placeholder="请输入学号" focus> </wInput>
+				</uni-easyinput>
 			</view>
 			<view class="password">
-				<uni-section type="line" title="密码" class='section'></uni-section>
-				<uni-easyinput type="password" placeholder="请输入教务系统密码" v-model="password" @change=""> </uni-easyinput>
+				<wInput v-model="password" type="password" isShowPass placeholder="请输入教务系统密码" focus> </wInput>
 			</view>
 			<view class="submit">
-				<u-button type="primary" @click="login" class='button'>登录</u-button>
+				<wButton text="登录" rotate="false" bgColor="rgb(94, 121, 135)" fontColor="#FFFFFF"
+					@click.native="login()">
+				</wButton>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import wInput from '../../components/watch-login/watch-input.vue' //input
+	import wButton from '../../components/watch-login/watch-button.vue'
 	export default {
 		data() {
 			return {
@@ -138,6 +138,10 @@
 				);
 			}
 		},
+		components: {
+			wButton,
+			wInput
+		}
 	}
 </script>
 
@@ -186,7 +190,7 @@
 	}
 
 	.button {
-		background: linear-gradient(to right, #43CBFF, #9708CC);
+		background: rgb(94, 121, 135);
 		border-radius: 10px;
 	}
 
