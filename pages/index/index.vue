@@ -25,7 +25,7 @@
 						</view>
 						<text class="time_text">天</text>
 						<view class="time_custom">
-							<text class="time__item">{{timeData.hours>10?timeData.hours:'0'+timeData.hours}}</text>
+							<text class="time__item">{{timeData.hours>=10?timeData.hours:'0'+timeData.hours}}</text>
 						</view>
 						<text class="time_text">时</text>
 						<view class="time_custom">
