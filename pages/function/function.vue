@@ -110,18 +110,34 @@
 			click: function(e) {
 				switch (e) {
 					case 0: {
-						uni.navigateTo({
-							url: "/pages/study/queryGrades/queryGrades"
-						});
+						if (getApp().globalData.isLogin == 0) {
+							uni.showToast({
+								title: '请先登录',
+								duration: 3000,
+								icon: "error"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/study/queryGrades/queryGrades"
+							});
+						}
 						break;
 					}
 					case 1: {
 
 					}
 					case 2: {
+						// if (getApp().globalData.isLogin == 0) {
+						// 	uni.showToast({
+						// 		title: '请先登录',
+						// 		duration: 3000,
+						// 		icon: "error"
+						// 	});
+						// } else {
 						uni.navigateTo({
 							url: "/pages/study/timetable/timetable"
 						});
+						// }
 						break;
 					}
 					case 3: {

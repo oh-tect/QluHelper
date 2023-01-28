@@ -16,7 +16,7 @@
 				</uni-easyinput>
 			</view>
 			<view class="password">
-				<wInput v-model="password" type="password" isShowPass placeholder="请输入教务系统密码" focus> </wInput>
+				<wInput v-model="password" type="password" isShowPass placeholder="请输入教务系统密码"> </wInput>
 			</view>
 			<view class="submit">
 				<wButton text="登录" rotate="false" bgColor="rgb(94, 121, 135)" fontColor="#FFFFFF"
