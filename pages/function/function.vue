@@ -113,12 +113,16 @@
 						uni.navigateTo({
 							url: "/pages/study/queryGrades/queryGrades"
 						});
+						break;
 					}
 					case 1: {
 
 					}
 					case 2: {
-
+						uni.navigateTo({
+							url: "/pages/study/timetable/timetable"
+						});
+						break;
 					}
 					case 3: {
 

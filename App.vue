@@ -8,6 +8,8 @@
 			isLogin: 0,
 			version: 'alpha 0.0.1',
 			notification: 0,
+			//开学日期
+			start_date: '2022-8-22'
 		},
 
 		onLaunch: function() {

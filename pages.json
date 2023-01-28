@@ -38,7 +38,7 @@
 		}, {
 			"path": "pages/study/timetable/timetable",
 			"style": {
-				"navigationBarTitleText": "课程表",
+				"navigationBarTitleText": "第10周",
 				"enablePullDownRefresh": false
 			}
 

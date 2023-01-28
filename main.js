@@ -2,7 +2,10 @@ import App from './App'
 import uView from '@/uni_modules/uview-ui'
 import {
 	getKaoyan_date,
-	getSeasonTime
+	getSeasonTime,
+	getDay,
+	getWeek,
+	getNowFormatDate
 } from 'util/date.js'
 import {
 	mytoken
@@ -12,7 +15,10 @@ Vue.prototype.$_tokens = {
 }
 Vue.prototype.$mydate = {
 	'getKaoyan_date': getKaoyan_date,
-	'getSeasonTime': getSeasonTime
+	'getSeasonTime': getSeasonTime,
+	'getDay': getDay,
+	'getWeek': getWeek,
+	'getNowFormatDate': getNowFormatDate
 }
 Vue.use(uView)
 // #ifndef VUE3

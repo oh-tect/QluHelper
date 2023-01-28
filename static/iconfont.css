@@ -1,0 +1,25 @@
+@font-face {
+	font-family: "iconfont";
+	/* Project id 3870149 */
+	src: url("/static/iconfont.ttf") format('truetype');
+}
+
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shijian-copy:before {
+	content: "\e722";
+}
+
+.icon-didian-copy:before {
+	content: "\e723";
+}
+
+.icon-kecheng-copy:before {
+	content: "\e724";
+}
