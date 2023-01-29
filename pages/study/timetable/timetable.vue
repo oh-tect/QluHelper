@@ -131,7 +131,7 @@
 							complete: () => {
 								this.isLoading = false;
 								console.log(this.isLoading);
-							}
+							},
 						});
 					});
 				} catch (e) {

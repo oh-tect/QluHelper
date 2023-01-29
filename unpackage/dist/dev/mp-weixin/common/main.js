@@ -27,7 +27,10 @@ _vue.default.prototype.$_tokens = {
 };
 _vue.default.prototype.$mydate = {
   'getKaoyan_date': _date.getKaoyan_date,
-  'getSeasonTime': _date.getSeasonTime
+  'getSeasonTime': _date.getSeasonTime,
+  'getDay': _date.getDay,
+  'getWeek': _date.getWeek,
+  'getNowFormatDate': _date.getNowFormatDate
 };
 _vue.default.use(_uviewUi.default);
 _vue.default.config.productionTip = false;
@@ -118,7 +121,9 @@ var _default = {
   globalData: {
     isLogin: 0,
     version: 'alpha 0.0.1',
-    notification: 0
+    notification: 0,
+    //开学日期
+    start_date: '2022-8-22'
   },
   onLaunch: function onLaunch() {
     console.log('App Launch');

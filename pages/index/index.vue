@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- <image class="logo" src="/static/logo.png"></image> -->
-		<u-tabbar :value="value1" @change="change1" :fixed="true" :placeholder="false" :safeAreaInsetBottom="false">
+		<u-tabbar :value="value1" @change="change1" :fixed="true" :placeholder="false" :safeAreaInsetBottom="true">
 			<u-tabbar-item text="首页" icon="home" @click="click1"></u-tabbar-item>
 			<u-tabbar-item text="功能" icon="photo" @click="click1"></u-tabbar-item>
 			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
@@ -40,6 +40,35 @@
 				</u-count-down>
 			</view>
 		</uni-card>
+
+		<view class="next_class">
+			<uni-card>
+				<template v-slot:title>
+					<uni-section title="下一节课" type="line"></uni-section>
+				</template>
+				<view v-if="hasClass">
+					<u-row class="">
+						<u-col span="7">
+							<uni-section v-bind:title="nextClassName" v-bind:subTitle="nextClassTime"
+								subTitleFontSize='15px' type="circle">
+							</uni-section>
+						</u-col>
+						<u-col align="center" justify="center" span="5">
+							{{nextClassPosition}}
+						</u-col>
+					</u-row>
+				</view>
+				<view v-else-if="isLogin !== 1">
+					<view style="text-align: center; margin: 20px 0 20px 0;">
+						<text>登录后获取信息....</text>
+					</view>
+				</view>
+				<view v-else style="text-align: center; margin: 20px 0 20px 0;">
+					<text>今天没有课咯~ (≧ω≦)</text>
+				</view>
+			</uni-card>
+		</view>
+
 		<view class="saying">
 			<uni-card>
 				<template v-slot:title>
@@ -93,81 +122,109 @@
 	</view>
 </template>
 <script>
-	// import {
-	// 	getKaoyan_date
-	// } from "../../util/date.js";
 	export default {
 		data() {
 			return {
 				title: '测试',
 				value1: 0,
+				//时间数据
 				timeData: {},
+				//诗词
 				saying: '',
 				author: '',
+				//来源
 				origin: '',
+				//天气
 				weather: [],
+				//高气温
 				high: [],
+				//低气温
 				low: [],
+				//天气代码
 				code: [],
+				//天气数据
 				weather_data: [],
-				getDate: ''
+				getDate: '',
+				//当前日期，测试在这里修改
+				date: '2022-11-22 10:45',
+				//当前日期是第几周
+				week: '',
+				//当前日期是星期几
+				day: '',
+				//保存课程的list
+				classes: [],
+				username: '',
+				token: '',
+				//下一节课开始时间
+				ClassStartTime: [],
+				//下一节课名称，以下同理
+				nextClassName: '',
+				nextClassTime: '',
+				nextClassPosition: '',
+				//学期是否结束
+				isEnd: false,
+				//是否有课
+				hasClass: false,
+			}
+		},
+		computed: {
+			isLogin: function() {
+				return uni.getStorageSync('isLogin');
 			}
 		},
 		onLoad() {
-			console.log("是否登录:" + getApp().globalData.isLogin);
+			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
-			new Promise((resolve, reject) => {
-				uni.request({
-					url: 'https://v1.jinrishici.com/all.json',
-					method: 'GET',
-					success: (e) => {
-						console.log(e)
-						resolve(e);
-					},
-					fail: () => {
-						this.saying = '请求错误，请稍后再试。';
-						reject();
-					},
-					complete: (e) => {
-						this.saying = e.data['content'];
-						this.author = e.data['author'];
-						this.origin = e.data['origin'];
+			//加载诗词
+			this.$requests.getPoem();
+			this.saying = getApp().globalData.saying;
+			this.author = getApp().globalData.author;
+			this.origin = getApp().globalData.origin;
+			//加载天气
+			this.$requests.getWeather();
+			this.weather = getApp().globalData.weather;
+			this.high = getApp().globalData.high;
+			this.low = getApp().globalData.low;
+			this.code = getApp().globalData.code;
+			this.weather_data = getApp().globalData.weather_data;
+			//加载下一节课及初始化
+			// this.date = this.$mydate.getNowFormatDate();
+			this.week = this.$mydate.getWeek(this.date);
+			console.log(this.week);
+			this.day = this.$mydate.getDay(this.date);
+			console.log(this.day);
+			this.token = uni.getStorageSync('token');
+			console.log(this.token);
+			if (this.token == null) {
+				uni.setStorageSync('isLogin', 0);
+				console.log("没有登录");
+				getApp().globalData.isLogin = 0;
+			} else {
+				this.username = uni.getStorageSync('username');
+				this.$requests.getClassTable(this.week, this.day, this.username, this.token);
+				console.log(getApp().globalData.classes);
+				//获取下一节课信息
+				this.hasClass = false;
+				for (let item of getApp().globalData.classes) {
+					let start = String(item[1]).slice(0, 5);
+					let date = this.date.slice(0, 10) + ' ' + start;
+					let startTimeStamp = new Date(date).getTime();
+					if (new Date(this.date).getTime() - startTimeStamp < 0) {
+						this.nextClassName = item[0];
+						this.nextClassTime = item[1];
+						this.nextClassPosition = item[2];
+						this.hasClass = true;
+						break;
 					}
-				});
-			});
-			new Promise((resolve, reject) => {
-				uni.request({
-					url: 'https://api.seniverse.com/v3/weather/daily.json',
-					data: {
-						'key': 'Sp7w-2_Jj1AdF1MHH',
-						'location': '济南',
-						'language': 'zh-Hans',
-						'unit': 'c',
-						'start': '0',
-						'days': '2'
-					},
-					success: (re) => {
-						for (let i of re.data['results'][0]['daily']) {
-							let data = [];
-							console.log(i.text_day);
-							data.push(i.text_day);
-							data.push(i.high);
-							data.push(i.low);
-							data.push(i.code_day);
-							this.weather_data.push(data);
-						}
-						for (let i of this.weather_data) {
-							this.weather.push(i[0]);
-							this.high.push(i[1]);
-							this.low.push(i[2]);
-							this.code.push(i[3]);
-						}
-						console.log(this.weather_data);
-						console.log(this.code);
-					}
-				})
-			})
+				}
+				if (!this.hasClass) {
+					console.log("没有课啦")
+				} else {
+					console.log(this.nextClassName);
+				}
+			}
+
 		},
 		methods: {
 			cli: function() {
@@ -180,7 +237,7 @@
 						url: '/pages/function/function'
 					});
 				} else if (e == 2) {
-					if (getApp().globalData.isLogin == 0) {
+					if (uni.getStorageSync('isLogin') !== 1) {
 						uni.redirectTo({
 							url: '/pages/login/login'
 						});

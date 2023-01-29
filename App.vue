@@ -9,7 +9,28 @@
 			version: 'alpha 0.0.1',
 			notification: 0,
 			//开学日期
-			start_date: '2022-8-22'
+			start_date: '2022-8-22',
+			weather_data: [],
+			weather: [],
+			high: [],
+			low: [],
+			code: [],
+			saying: '',
+			author: '',
+			origin: '',
+			//选中日期
+			date: '2022-11-22',
+			//选中日期是第几周
+			week: '',
+			//选中日期是星期几
+			day: '',
+			//保存课程的list
+			classes: [],
+			username: '',
+			token: '',
+			//学期是否结束
+			isEnd: Boolean,
+			hasClass: Boolean,
 		},
 
 		onLaunch: function() {

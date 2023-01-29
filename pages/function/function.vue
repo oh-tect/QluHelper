@@ -93,7 +93,7 @@
 						url: '/pages/index/index'
 					});
 				} else if (e == 2) {
-					if (getApp().globalData.isLogin == 0) {
+					if (uni.getStorageSync('isLogin') !== 1) {
 						uni.redirectTo({
 							url: '/pages/login/login'
 						});
@@ -110,7 +110,7 @@
 			click: function(e) {
 				switch (e) {
 					case 0: {
-						if (getApp().globalData.isLogin == 0) {
+						if (uni.getStorageSync('isLogin') != 1) {
 							uni.showToast({
 								title: '请先登录',
 								duration: 3000,
@@ -124,7 +124,7 @@
 						break;
 					}
 					case 1: {
-
+						break;
 					}
 					case 2: {
 						// if (getApp().globalData.isLogin == 0) {
@@ -134,17 +134,24 @@
 						// 		icon: "error"
 						// 	});
 						// } else {
-						uni.navigateTo({
-							url: "/pages/study/timetable/timetable"
-						});
-						// }
+						if (uni.getStorageSync('isLogin') != 1) {
+							uni.showToast({
+								title: '请先登录',
+								duration: 3000,
+								icon: "error"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/study/timetable/timetable"
+							});
+						}
 						break;
 					}
 					case 3: {
-
+						break;
 					}
 					case 4: {
-
+						break;
 					}
 				}
 			}
