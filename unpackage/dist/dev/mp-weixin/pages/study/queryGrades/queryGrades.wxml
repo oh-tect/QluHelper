@@ -1,1 +1,35 @@
-<view><view class="main"><uni-section vue-id="115bf47c-1" title="设置" type="line" bind:__l="__l"></uni-section><view class="setting"><view class="label"><text>学期:</text></view><view class="picker"><hpy-form-select vue-id="115bf47c-2" title="请选择" dataList="{{year}}" value="0" data-event-opts="{{[['^change',[['change']]]]}}" bind:change="__e" bind:__l="__l"></hpy-form-select></view></view><uni-section vue-id="115bf47c-3" title="查询结果" type="line" bind:__l="__l"></uni-section><view class="result_info"><view class="all"><uni-card class="card" vue-id="115bf47c-4" margin="8px" is-shadow="{{false}}" bind:__l="__l" vue-slots="{{['default']}}"><view class="title"><text>当前成绩总数</text></view><view class="number"><u-count-to vue-id="{{('115bf47c-5')+','+('115bf47c-4')}}" startVal="{{0}}" endVal="{{23}}" fontSize="50px" bind:__l="__l"></u-count-to></view></uni-card></view><view class="credit"><uni-card class="card" vue-id="115bf47c-6" margin="8px" is-shadow="{{false}}" bind:__l="__l" vue-slots="{{['default']}}"><view class="title"><text>当前学分</text></view><view class="number"><u-count-to vue-id="{{('115bf47c-7')+','+('115bf47c-6')}}" startVal="{{0}}" decimals="1" endVal="{{4.9}}" fontSize="50px" bind:__l="__l"></u-count-to></view></uni-card></view></view><view class="grade"><grade-card vue-id="115bf47c-8" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-9" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-10" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-11" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-12" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-13" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-14" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-15" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-16" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-17" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-18" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-19" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-20" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-21" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-22" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card><grade-card vue-id="115bf47c-23" subject="测试" grade="89" credit="2.6" type="必修" bind:__l="__l"></grade-card></view></view></view>
+<view>
+  <view class="main">
+    <uni-section vue-id="115bf47c-1" title="设置" type="line" bind:__l="__l"></uni-section>
+    <view class="setting">
+      <view class="label"><text>学期:</text></view>
+      <view class="picker">
+        <hpy-form-select vue-id="115bf47c-2" title="默认为最新成绩" dataList="{{year}}" value="0" data-event-opts="{{[['^change',[['change']]]]}}" bind:change="__e" bind:__l="__l"></hpy-form-select>
+      </view>
+    </view>
+    <uni-section vue-id="115bf47c-3" title="查询结果" type="line" bind:__l="__l"></uni-section>
+    <view class="result_info">
+      <view class="all">
+        <uni-card class="card" vue-id="115bf47c-4" margin="8px" is-shadow="{{false}}" bind:__l="__l" vue-slots="{{['default']}}">
+          <view class="title"><text>当前成绩总数</text></view>
+          <view class="number">
+            <u-count-to vue-id="{{('115bf47c-5')+','+('115bf47c-4')}}" startVal="{{0}}" endVal="{{$root.g0}}" fontSize="50px" bind:__l="__l"></u-count-to>
+          </view>
+        </uni-card>
+      </view>
+      <view class="credit">
+        <uni-card class="card" vue-id="115bf47c-6" margin="8px" is-shadow="{{false}}" bind:__l="__l" vue-slots="{{['default']}}">
+          <view class="title"><text>当前总绩点</text></view>
+          <view class="number">
+            <u-count-to vue-id="{{('115bf47c-7')+','+('115bf47c-6')}}" startVal="{{0}}" decimals="2" endVal="{{$root.m0}}" fontSize="50px" bind:__l="__l"></u-count-to>
+          </view>
+        </uni-card>
+      </view>
+    </view>
+    <block wx:for="{{grades}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+      <view class="grade">
+        <grade-card vue-id="{{'115bf47c-8-'+index}}" subject="{{item[0]}}" grade="{{item[2]}}" credit="{{item[3]}}" type="{{item[1]}}" bind:__l="__l"></grade-card>
+      </view>
+    </block>
+  </view>
+</view>

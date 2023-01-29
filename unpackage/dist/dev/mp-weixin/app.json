@@ -4,7 +4,8 @@
     "pages/function/function",
     "pages/login/login",
     "pages/userInfo/userInfo",
-    "pages/study/queryGrades/queryGrades"
+    "pages/study/queryGrades/queryGrades",
+    "pages/study/timetable/timetable"
   ],
   "subPackages": [],
   "window": {

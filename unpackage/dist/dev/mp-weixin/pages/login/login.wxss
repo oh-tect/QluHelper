@@ -10,7 +10,7 @@
 .login {
 	margin-left: 20px;
 	margin-right: 20px;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 .logo_div {
 	text-align: center;
@@ -22,9 +22,9 @@
 }
 .username {
 	display: inline;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-left: 10px;
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 }
 .label {
 	font-size: 15px;
@@ -34,8 +34,8 @@
 	margin-bottom: 30px;
 }
 .button {
-	background: linear-gradient(to right, #43CBFF, #9708CC);
-	border-radius: 20px;
+	background: rgb(94, 121, 135);
+	border-radius: 10px;
 }
 .submit {
 	padding-top: 10px;

@@ -10,6 +10,16 @@ import {
 import {
 	mytoken
 } from 'util/token.js'
+import {
+	getClassTable,
+	getPoem,
+	getWeather
+} from 'util/requests.js'
+Vue.prototype.$requests = {
+	'getClassTable': getClassTable,
+	'getPoem': getPoem,
+	'getWeather': getWeather
+}
 Vue.prototype.$_tokens = {
 	'mytoken': mytoken
 }

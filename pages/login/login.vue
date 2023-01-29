@@ -99,6 +99,7 @@
 									url: '/pages/index/index'
 								});
 								getApp().globalData.isLogin = 1;
+								uni.setStorageSync('isLogin', 1);
 								resolve();
 
 							}

@@ -61,7 +61,9 @@
 .saying {
 	color: #2f3640;
 }
-.author {
+.from {
+	margin-top: 10px;
+	color: #2f3640;
 	text-align: end;
 }
 

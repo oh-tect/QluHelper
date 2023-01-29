@@ -6,6 +6,8 @@
     "uni-card": "/uni_modules/uni-card/components/uni-card/uni-card",
     "uni-list": "/uni_modules/uni-list/components/uni-list/uni-list",
     "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
-    "u-count-down": "/uni_modules/uview-ui/components/u-count-down/u-count-down"
+    "u-count-down": "/uni_modules/uview-ui/components/u-count-down/u-count-down",
+    "u-row": "/uni_modules/uview-ui/components/u-row/u-row",
+    "u-col": "/uni_modules/uview-ui/components/u-col/u-col"
   }
 }
