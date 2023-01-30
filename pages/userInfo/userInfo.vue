@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<u-tabbar :value="value1" @change="change1" :fixed="true" :placeholder="false" :safeAreaInsetBottom="false">
-			<u-tabbar-item text="首页" icon="home" @click="click1"></u-tabbar-item>
-			<u-tabbar-item text="功能" icon="photo" @click="click1"></u-tabbar-item>
-			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
+			<u-tabbar-item text="首页" icon="home"></u-tabbar-item>
+			<u-tabbar-item text="功能" icon="photo"></u-tabbar-item>
+			<u-tabbar-item text="我的" icon="account"></u-tabbar-item>
 		</u-tabbar>
 		<view class="userinfo">
 			<uni-card :is-shadow='false' is-full :border="false">
@@ -65,7 +65,12 @@
 			let username = uni.getStorageSync("username");
 			let token = uni.getStorageSync('token');
 			let that = this;
-			if (username && token) {
+			let studentName = uni.getStorageSync('studentName');
+			let studentID = uni.getStorageSync('studentID');
+			let department = uni.getStorageSync('department');
+			let major = uni.getStorageSync('major');
+			//如果缓存里没有信息，就加载一次，有信息就直接读取
+			if (username && token && !(studentID && studentName && department && major)) {
 				new Promise((resolve, reject) => {
 					uni.request({
 						url: 'http://jwxt.qlu.edu.cn/app.do',
@@ -84,15 +89,24 @@
 								this.$_tokens.mytoken.refreshToken();
 							} else {
 								this.studentName = re.data['xm'];
+								uni.setStorageSync("studentName", re.data['xm'])
 								that.studentID = re.data['xh'];
+								uni.setStorageSync("studentID", re.data['xh'])
 								that.department = re.data['yxmc'];
+								uni.setStorageSync("department", re.data['yxmc'])
 								that.major = re.data['zymc'];
+								uni.setStorageSync("major", re.data['zymc']);
 							}
 
 						}
 					});
 
 				});
+			} else if (studentID && studentName && department && major) {
+				this.studentID = studentID;
+				this.studentName = studentName;
+				this.department = department;
+				this.major = major;
 			} else {
 				console.log("获取信息失败,没有username和password");
 			}
@@ -105,25 +119,39 @@
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
-					uni.redirectTo({
-						url: "/pages/index/index"
+					uni.switchTab({
+						url: "/pages/index/index",
+						success() {
+							let page = getCurrentPages().pop(); //跳转页面成功之后
+							if (!page) return;
+							page.onLoad(); //如果页面存在，则重新刷新页面
+						}
 					});
 				} else if (e == 1) {
-					uni.redirectTo({
-						url: '/pages/function/function'
+					uni.switchTab({
+						url: '/pages/function/function',
+						success() {
+							let page = getCurrentPages().pop(); //跳转页面成功之后
+							if (!page) return;
+							page.onLoad(); //如果页面存在，则重新刷新页面
+						}
 					})
 				}
 			},
 			logout: function() {
-				uni.removeStorageSync('token');
+				uni.setStorageSync('token', -1);
+				uni.setStorageSync('isLogin', 0);
 				getApp().globalData.isLogin = 0;
+				getApp().globalData.classes = [];
 				uni.showToast({
 					title: "注销成功！",
-					duration: 3000
 				});
-				uni.redirectTo({
-					url: '/pages/login/login'
-				});
+				setTimeout(() => {
+					uni.switchTab({
+						url: '/pages/index/index',
+					});
+				}, 1000)
+
 			}
 		}
 	}

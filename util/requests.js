@@ -1,8 +1,8 @@
-const getClassTable = function(week, day, username, token) {
+const getClassTable = async function(week, day, username, token) {
 	getApp().globalData.isEnd = false;
 	getApp().globalData.hasClass = true;
 	try {
-		new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			uni.request({
 				url: "http://jwxt.qlu.edu.cn/app.do",
 				method: "GET",
@@ -25,6 +25,7 @@ const getClassTable = function(week, day, username, token) {
 						getApp().globalData.isEnd = true;
 						return;
 					} else {
+						let result = [];
 						for (let item of re.data) {
 							if (item['kcsj'][0] == day) {
 								let list = [];
@@ -32,16 +33,21 @@ const getClassTable = function(week, day, username, token) {
 								let time = item['kssj'] + '-' + item['jssj'];
 								list.push(time);
 								list.push(item['jsmc']);
-								getApp().globalData.classes.push(list);
+								result.push(list);
 							}
 						}
+
+						getApp().globalData.classes = result;
+
 						if (getApp().globalData.classes.length === 0) {
 							getApp().globalData.hasClass = false;
 						}
 					}
+					resolve();
 				},
 				complete: () => {
 
+					console.log("以获取课表");
 				}
 			});
 		});

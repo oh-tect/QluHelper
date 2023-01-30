@@ -41,13 +41,14 @@
 		methods: {
 			change1: function(e) {
 				if (e == 1) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/function/function'
-					})
+					});
+					window.location.reload();
 				} else if (e == 0) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/index/index'
-					})
+					});
 				}
 
 			},
@@ -89,19 +90,24 @@
 								uni.setStorageSync('username', this.username);
 								uni.setStorageSync('password', this.password);
 								uni.hideLoading();
+								// uni.showToast({
+								// 	title: '登录成功',
+								// 	icon: 'success',
+								// 	position: 'bottom'
+								// });
 								uni.showToast({
 									title: '登录成功',
-									duration: 3000,
 									icon: 'success',
 									position: 'bottom'
 								});
-								uni.redirectTo({
-									url: '/pages/index/index'
-								});
-								getApp().globalData.isLogin = 1;
-								uni.setStorageSync('isLogin', 1);
-								resolve();
-
+								setTimeout(() => {
+									getApp().globalData.isLogin = 1;
+									uni.setStorageSync('isLogin', 1);
+									uni.switchTab({
+										url: '/pages/index/index'
+									});
+									resolve();
+								}, 2000)
 							}
 						},
 						fail: (re) => {

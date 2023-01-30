@@ -3,7 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "主页"
+				"navigationBarTitleText": "主页",
+				"enablePullDownRefresh": false
 			}
 		}
 
@@ -42,6 +43,12 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/study/empty-classroom/empty-classroom",
+			"style": {
+				"navigationBarTitleText": "空教室",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
@@ -50,5 +57,21 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"list": [{
+			"pagePath": "pages/function/function",
+			"text": "功能"
+		}, {
+			"pagePath": "pages/index/index",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/login/login",
+			"text": "我的"
+		}, {
+			"pagePath": "pages/userInfo/userInfo",
+			"text": "我的"
+
+		}]
+	}
 }

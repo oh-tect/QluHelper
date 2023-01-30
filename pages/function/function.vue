@@ -89,24 +89,25 @@
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/index/index'
+
 					});
 				} else if (e == 2) {
 					if (uni.getStorageSync('isLogin') !== 1) {
-						uni.redirectTo({
+						uni.switchTab({
 							url: '/pages/login/login'
+
 						});
 					} else {
-						uni.redirectTo({
+						uni.switchTab({
 							url: '/pages/userInfo/userInfo'
+
 						});
 					}
 				}
 			},
-			click1: function() {
-				console.log('');
-			},
+			click1: function() {},
 			click: function(e) {
 				switch (e) {
 					case 0: {
@@ -124,6 +125,17 @@
 						break;
 					}
 					case 1: {
+						if (uni.getStorageSync('isLogin') != 1) {
+							uni.showToast({
+								title: '请先登录',
+								duration: 3000,
+								icon: "error"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/study/empty-classroom/empty-classroom"
+							});
+						}
 						break;
 					}
 					case 2: {

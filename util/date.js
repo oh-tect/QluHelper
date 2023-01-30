@@ -9,8 +9,8 @@ const getSeasonTime = (month) => {
 }
 
 //获取yyyy-MM-dd格式的时间
-const getNowFormatDate = () => {
-	let date = new Date(),
+const getNowFormatDate = (dates) => {
+	let date = new Date(dates),
 		year = date.getFullYear(), //获取完整的年份(4位)
 		month = date.getMonth() + 1, //获取当前月份(0-11,0代表1月)
 		strDate = date.getDate() // 获取当前日(1-31)

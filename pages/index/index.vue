@@ -46,7 +46,7 @@
 				<template v-slot:title>
 					<uni-section title="下一节课" type="line"></uni-section>
 				</template>
-				<view v-if="hasClass">
+				<view v-if="hasClass && token != -1">
 					<u-row class="">
 						<u-col span="7">
 							<uni-section v-bind:title="nextClassName" v-bind:subTitle="nextClassTime"
@@ -58,7 +58,7 @@
 						</u-col>
 					</u-row>
 				</view>
-				<view v-else-if="isLogin !== 1">
+				<view v-else-if="token == -1">
 					<view style="text-align: center; margin: 20px 0 20px 0;">
 						<text>登录后获取信息....</text>
 					</view>
@@ -164,7 +164,7 @@
 				//学期是否结束
 				isEnd: false,
 				//是否有课
-				hasClass: false,
+				hasClass: Boolean,
 			}
 		},
 		computed: {
@@ -172,7 +172,7 @@
 				return uni.getStorageSync('isLogin');
 			}
 		},
-		onLoad() {
+		async onShow() {
 			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
@@ -191,40 +191,41 @@
 			//加载下一节课及初始化
 			// this.date = this.$mydate.getNowFormatDate();
 			this.week = this.$mydate.getWeek(this.date);
-			console.log(this.week);
 			this.day = this.$mydate.getDay(this.date);
-			console.log(this.day);
 			this.token = uni.getStorageSync('token');
 			console.log(this.token);
-			if (this.token == null) {
-				uni.setStorageSync('isLogin', 0);
+			if (this.token == -1 || uni.getStorageSync('isLogin') == 0) {
 				console.log("没有登录");
 				getApp().globalData.isLogin = 0;
 			} else {
 				this.username = uni.getStorageSync('username');
-				this.$requests.getClassTable(this.week, this.day, this.username, this.token);
+
+				await this.$requests.getClassTable(this.week, this.day, this.username, this.token);
 				console.log(getApp().globalData.classes);
 				//获取下一节课信息
-				this.hasClass = false;
-				for (let item of getApp().globalData.classes) {
-					let start = String(item[1]).slice(0, 5);
-					let date = this.date.slice(0, 10) + ' ' + start;
-					let startTimeStamp = new Date(date).getTime();
-					if (new Date(this.date).getTime() - startTimeStamp < 0) {
-						this.nextClassName = item[0];
-						this.nextClassTime = item[1];
-						this.nextClassPosition = item[2];
-						this.hasClass = true;
-						break;
+				console.log(getApp().globalData.classes.length)
+				this.hasClass = getApp().globalData.hasClass;
+				if (getApp().globalData.classes != null) {
+					for (let item of getApp().globalData.classes) {
+						let start = String(item[1]).slice(0, 5);
+						let date = this.date.slice(0, 10) + ' ' + start;
+						let startTimeStamp = new Date(date).getTime();
+						if (new Date(this.date).getTime() - startTimeStamp < 0) {
+							this.nextClassName = item[0];
+							this.nextClassTime = item[1];
+							this.nextClassPosition = item[2];
+							this.hasClass = true;
+							break;
+						}
+					}
+					if (!getApp().globalData.hasClass) {
+						console.log("没有课啦")
+					} else {
+						console.log(this.nextClassName);
 					}
 				}
-				if (!this.hasClass) {
-					console.log("没有课啦")
-				} else {
-					console.log(this.nextClassName);
-				}
 			}
-
+			console.log("hasClass: " + this.hasClass);
 		},
 		methods: {
 			cli: function() {
@@ -233,16 +234,22 @@
 
 			click1: function(e) {
 				if (e === 1) {
-					uni.redirectTo({
-						url: '/pages/function/function'
+					uni.switchTab({
+						url: '/pages/function/function',
+						success() {
+							let page = getCurrentPages().pop(); //跳转页面成功之后
+							if (!page) return;
+							page.onLoad(); //如果页面存在，则重新刷新页面
+						}
 					});
+
 				} else if (e == 2) {
 					if (uni.getStorageSync('isLogin') !== 1) {
-						uni.redirectTo({
+						uni.switchTab({
 							url: '/pages/login/login'
 						});
 					} else {
-						uni.redirectTo({
+						uni.switchTab({
 							url: '/pages/userInfo/userInfo'
 						});
 					}
