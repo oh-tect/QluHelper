@@ -177,7 +177,7 @@
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
 			//加载诗词
-			this.$requests.getPoem();
+			await this.$requests.getPoem();
 			this.saying = getApp().globalData.saying;
 			this.author = getApp().globalData.author;
 			this.origin = getApp().globalData.origin;

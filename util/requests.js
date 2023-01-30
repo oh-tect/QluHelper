@@ -56,23 +56,25 @@ const getClassTable = async function(week, day, username, token) {
 	}
 }
 
-const getPoem = function() {
-	new Promise((resolve, reject) => {
+const getPoem = async function() {
+	return new Promise((resolve, reject) => {
 		uni.request({
 			url: 'https://v1.jinrishici.com/all.json',
 			method: 'GET',
 			success: (e) => {
-				console.log(e)
-				resolve(e);
+				console.log(e);
+				getApp().globalData.saying = e.data['content'];
+				console.log(e.data['content']);
+				getApp().globalData.author = e.data['author'];
+				getApp().globalData.origin = e.data['origin'];
+				resolve();
 			},
 			fail: () => {
 				getApp().globalData.saying = '请求错误，请稍后再试。';
 				reject();
 			},
 			complete: (e) => {
-				getApp().globalData.saying = e.data['content'];
-				getApp().globalData.author = e.data['author'];
-				getApp().globalData.origin = e.data['origin'];
+
 			}
 		});
 	});
