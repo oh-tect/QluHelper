@@ -58,7 +58,7 @@
 						</u-col>
 					</u-row>
 				</view>
-				<view v-else-if="token == -1">
+				<view v-else-if="(token == -1 || token == null || token == ' ')">
 					<view style="text-align: center; margin: 20px 0 20px 0;">
 						<text>登录后获取信息....</text>
 					</view>

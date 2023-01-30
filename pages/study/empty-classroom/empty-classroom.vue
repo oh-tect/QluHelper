@@ -2,7 +2,7 @@
 	<view>
 		<uni-section title="设置查询时间" type="circle"></uni-section>
 		<uni-card :is-shadow='false' is-full :border="false">
-			<lb-picker :list="list" mode="unlinkedSelector" @change="handleChange" v-model="value">
+			<lb-picker :list="list" mode="unlinkedSelector" @confirm="handleChange" v-model="value">
 				<uni-list>
 					<uni-list-item title="日期和时间 " :rightText="originDate + ' ' + orginTime + '节'">
 					</uni-list-item>
@@ -28,10 +28,14 @@
 			<template v-slot:title>
 				<uni-section type="line" :title="originDate + ' ' + orginTime + '节'"></uni-section>
 			</template>
-			<view v-for="(item, index) in emptyClassroomList" :key="index">
+			<uni-section type="circle" title="1号公教楼"></uni-section>
+			<view v-for="(item, index) in firstTeachingBuilding" :key="index + Math.random()" class="tag">
 				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
 			</view>
-
+			<uni-section type="circle" title="2号公教楼"></uni-section>
+			<view v-for="(item, index) in secondTeachingBuilding" :key="index + Math.random()" class="tag">
+				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+			</view>
 		</uni-card>
 	</view>
 </template>
@@ -69,7 +73,9 @@
 						disabled: 'false'
 					}
 				],
-				radiovalue1: '长清校区'
+				radiovalue1: '长清校区',
+				firstTeachingBuilding: [],
+				secondTeachingBuilding: [],
 			}
 		},
 		components: {
@@ -92,46 +98,9 @@
 			this.originDate = this.list[0][0];
 			let token = uni.getStorageSync('token');
 			this.getAllClassroom(token);
-
-			// new Promise((resolve, reject) => {
-			// 	try {
-			// 		uni.request({
-			// 			url: "http://jwxt.qlu.edu.cn/app.do",
-			// 			method: 'GET',
-			// 			data: {
-			// 				"method": "getKxJscx",
-			// 				"time": this.date,
-			// 				"idleTime": this.idleTime
-			// 			},
-			// 			header: {
-			// 				"token": token
-			// 			},
-			// 			success: (re) => {
-			// 				console.log(re);
-			// 				if (JSON.stringify(re.data).includes("token")) {
-			// 					console.log("token过期");
-			// 				} else {
-			// 					for (let item of re.data) {
-			// 						if (String(item['jxl']) === '长清校区-1号公教楼' || String(item['jxl']) ===
-			// 							'长清校区-2号公教楼') {
-			// 							for (let items of item['jsList']) {
-			// 								this.emptyClassroomList.push(items['jsmc']);
-			// 							}
-
-			// 						}
-			// 					}
-			// 					console.log(this.emptyClassroomList);
-			// 				}
-			// 			}
-			// 		})
-			// 	} catch (e) {
-			// 		//TODO handle the exception
-			// 	}
-			// });
 		},
 		methods: {
 			handleChange: function(item) {
-				console.log(item.item[0]);
 				let time1 = String(item.item[1])[0];
 				let time2 = String(item.item[1]).substring(2);
 				this.orginTime = item.item[1];
@@ -155,14 +124,19 @@
 				this.date = this.$mydate.getNowFormatDate(dates);
 				console.log(this.date);
 				let token = uni.getStorageSync('token');
+				this.firstTeachingBuilding = [];
+				this.secondTeachingBuilding = [];
 				this.getAllClassroom(token);
 			},
 			radiochange: function(e) {
-				console.log(e);
 				this.choosen = e;
 			},
 			getAllClassroom: function(token) {
 				var that = this;
+				this.firstTeachingBuilding = [];
+				this.secondTeachingBuilding = [];
+				this.emptyClassroomList = [];
+				console.log("清除啦");
 				new Promise((resolve, reject) => {
 					try {
 						uni.request({
@@ -177,7 +151,6 @@
 								"token": token
 							},
 							success: (re) => {
-								console.log(re);
 								if (JSON.stringify(re.data).includes("token")) {
 									console.log("token过期");
 								} else {
@@ -188,10 +161,18 @@
 											for (let items of item['jsList']) {
 												that.emptyClassroomList.push(items['jsmc']);
 											}
-
 										}
 									}
-									console.log(that.emptyClassroomList);
+									for (let item of that.emptyClassroomList) {
+										if (String(item).includes("1号公教楼")) {
+											that.firstTeachingBuilding.push(String(item).substring(
+												5));
+										} else {
+											that.secondTeachingBuilding.push(String(item)
+												.substring(
+													5));
+										}
+									}
 								}
 							}
 						})
@@ -209,6 +190,7 @@
 
 	.tag {
 		display: inline-block;
-		margin-top: 10px;
+		margin-top: 5px;
+		margin-left: 5px;
 	}
 </style>
