@@ -234,23 +234,18 @@
 
 			click1: function(e) {
 				if (e === 1) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/function/function',
-						success() {
-							let page = getCurrentPages().pop(); //跳转页面成功之后
-							if (!page) return;
-							page.onLoad(); //如果页面存在，则重新刷新页面
-						}
 					});
 
 				} else if (e == 2) {
 					if (uni.getStorageSync('isLogin') !== 1) {
-						uni.switchTab({
+						uni.redirectTo({
 							url: '/pages/login/login'
 						});
 					} else {
-						uni.switchTab({
-							url: '/pages/userInfo/userInfo'
+						uni.redirectTo({
+							url: "/pages/userInfo/userInfo"
 						});
 					}
 				}

@@ -5,7 +5,9 @@
     "pages/login/login",
     "pages/userInfo/userInfo",
     "pages/study/queryGrades/queryGrades",
-    "pages/study/timetable/timetable"
+    "pages/study/timetable/timetable",
+    "pages/study/empty-classroom/empty-classroom",
+    "pages/about/about"
   ],
   "subPackages": [],
   "window": {

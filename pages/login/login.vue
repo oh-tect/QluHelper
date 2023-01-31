@@ -41,12 +41,12 @@
 		methods: {
 			change1: function(e) {
 				if (e == 1) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/function/function'
 					});
 					window.location.reload();
 				} else if (e == 0) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/index/index'
 					});
 				}
@@ -103,7 +103,7 @@
 								setTimeout(() => {
 									getApp().globalData.isLogin = 1;
 									uni.setStorageSync('isLogin', 1);
-									uni.switchTab({
+									uni.redirectTo({
 										url: '/pages/index/index'
 									});
 									resolve();

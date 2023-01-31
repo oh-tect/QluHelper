@@ -30,7 +30,8 @@
 			</uni-card>
 			<uni-card :is-shadow="false" is-full :border="false">
 				<uni-list>
-					<uni-list-item showArrow="true" title="关于此软件"></uni-list-item>
+					<uni-list-item showArrow="true" title="关于此软件" @click="about" to="/pages/about/about">
+					</uni-list-item>
 				</uni-list>
 			</uni-card>
 			<uni-card :is-shadow="false">
@@ -119,11 +120,11 @@
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: "/pages/index/index",
 					});
 				} else if (e == 1) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/function/function',
 					})
 				}
@@ -137,11 +138,16 @@
 					title: "注销成功！",
 				});
 				setTimeout(() => {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/index/index',
 					});
 				}, 1000)
 
+			},
+			about: function() {
+				uni.navigateTo({
+					url: "/pages/about/about"
+				});
 			}
 		}
 	}

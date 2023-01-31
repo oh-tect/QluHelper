@@ -29,11 +29,11 @@
 				<uni-section type="line" :title="originDate + ' ' + orginTime + '节'"></uni-section>
 			</template>
 			<uni-section type="circle" title="1号公教楼"></uni-section>
-			<view v-for="(item, index) in firstTeachingBuilding" :key="index + Math.random()" class="tag">
+			<view v-for="(item, index) in firstTeachingBuilding" :key="Math.random()" class="tag">
 				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
 			</view>
 			<uni-section type="circle" title="2号公教楼"></uni-section>
-			<view v-for="(item, index) in secondTeachingBuilding" :key="index + Math.random()" class="tag">
+			<view v-for="(item, index) in secondTeachingBuilding" :key="Math.random()" class="tag">
 				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
 			</view>
 		</uni-card>
@@ -151,6 +151,7 @@
 								"token": token
 							},
 							success: (re) => {
+								console.log(re);
 								if (JSON.stringify(re.data).includes("token")) {
 									console.log("token过期");
 								} else {

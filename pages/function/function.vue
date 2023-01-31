@@ -89,18 +89,18 @@
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
-					uni.switchTab({
+					uni.redirectTo({
 						url: '/pages/index/index'
 
 					});
 				} else if (e == 2) {
 					if (uni.getStorageSync('isLogin') !== 1) {
-						uni.switchTab({
+						uni.redirectTo({
 							url: '/pages/login/login'
 
 						});
 					} else {
-						uni.switchTab({
+						uni.redirectTo({
 							url: '/pages/userInfo/userInfo'
 
 						});
