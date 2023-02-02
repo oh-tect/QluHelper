@@ -126,6 +126,7 @@
 		data() {
 			return {
 				title: '测试',
+				tabbar: '',
 				value1: 0,
 				//时间数据
 				timeData: {},
@@ -173,6 +174,7 @@
 			}
 		},
 		async onShow() {
+			uni.hideTabBar();
 			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
@@ -234,17 +236,17 @@
 
 			click1: function(e) {
 				if (e === 1) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/function/function',
 					});
 
 				} else if (e == 2) {
 					if (uni.getStorageSync('isLogin') !== 1) {
-						uni.redirectTo({
+						uni.switchTab({
 							url: '/pages/login/login'
 						});
 					} else {
-						uni.redirectTo({
+						uni.switchTab({
 							url: "/pages/userInfo/userInfo"
 						});
 					}

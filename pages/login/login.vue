@@ -38,15 +38,17 @@
 				password: ''
 			}
 		},
+		onLoad() {
+			uni.hideTabBar();
+		},
 		methods: {
 			change1: function(e) {
 				if (e == 1) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/function/function'
 					});
-					window.location.reload();
 				} else if (e == 0) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/index/index'
 					});
 				}
@@ -103,7 +105,7 @@
 								setTimeout(() => {
 									getApp().globalData.isLogin = 1;
 									uni.setStorageSync('isLogin', 1);
-									uni.redirectTo({
+									uni.switchTab({
 										url: '/pages/index/index'
 									});
 									resolve();

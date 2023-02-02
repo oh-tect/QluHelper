@@ -62,6 +62,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideTabBar();
 			console.log("是否登录:" + getApp().globalData.isLogin);
 			let username = uni.getStorageSync("username");
 			let token = uni.getStorageSync('token');
@@ -120,11 +121,11 @@
 		methods: {
 			change1: function(e) {
 				if (e == 0) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: "/pages/index/index",
 					});
 				} else if (e == 1) {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/function/function',
 					})
 				}
@@ -138,7 +139,7 @@
 					title: "注销成功！",
 				});
 				setTimeout(() => {
-					uni.redirectTo({
+					uni.switchTab({
 						url: '/pages/index/index',
 					});
 				}, 1000)

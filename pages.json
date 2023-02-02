@@ -63,21 +63,19 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
-	// "tabBar": {
-	// 	"list": [{
-	// 		"pagePath": "pages/function/function",
-	// 		"text": "功能"
-	// 	}, {
-	// 		"pagePath": "pages/index/index",
-	// 		"text": "首页"
-	// 	}, {
-	// 		"pagePath": "pages/login/login",
-	// 		"text": "我的"
-	// 	}, {
-	// 		"pagePath": "pages/userInfo/userInfo",
-	// 		"text": "我的"
+	"uniIdRouter": {},
+	"tabBar": {
+		"list": [{
+			"pagePath": "pages/function/function"
 
-	// 	}]
-	// }
+		}, {
+			"pagePath": "pages/index/index"
+
+		}, {
+			"pagePath": "pages/login/login"
+
+		}, {
+			"pagePath": "pages/userInfo/userInfo"
+		}]
+	}
 }
