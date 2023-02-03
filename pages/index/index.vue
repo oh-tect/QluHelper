@@ -289,7 +289,8 @@
 		justify-content: center;
 		align-items: center;
 		color: #f5f6fa;
-		background-color: #54a0ff;
+		background-color: rgb(94, 121, 135);
+		/*#54a0ff */
 		font-size: 18px;
 		width: 40px;
 		height: 40px;
