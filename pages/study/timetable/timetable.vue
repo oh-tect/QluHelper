@@ -56,7 +56,8 @@
 			classCard
 		},
 		onShow() {
-			this.date = this.$mydate.getNowFormatDate();
+			let dates = new Date(getApp().globalData.date);
+			this.date = this.$mydate.getNowFormatDate(dates);
 			this.week = this.$mydate.getWeek(this.date);
 			this.day = this.$mydate.getDay(this.date);
 			console.log("现在是第" + this.week + "周");

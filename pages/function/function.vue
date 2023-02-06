@@ -8,9 +8,7 @@
 
 		<uni-card title="">
 			<template v-slot:title>
-				<uni-list>
-					<uni-section title="学习" type="line"></uni-section>
-				</uni-list>
+				<uni-section title="学习" type="line"></uni-section>
 			</template>
 			<view class="grid">
 				<u-grid :border="true" @click="click" col="3">
@@ -24,10 +22,7 @@
 		</uni-card>
 		<uni-card>
 			<template v-slot:title>
-				<uni-list>
-					<uni-section title="生活" type="line"></uni-section>
-
-				</uni-list>
+				<uni-section title="生活" type="line"></uni-section>
 			</template>
 
 			<u-grid :border="true" @click="click" col="3">

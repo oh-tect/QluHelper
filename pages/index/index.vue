@@ -6,11 +6,9 @@
 			<u-tabbar-item text="功能" icon="photo" @click="click1"></u-tabbar-item>
 			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
 		</u-tabbar>
-		<uni-card>
+		<uni-card class="card" :is-shadow="false">
 			<template v-slot:title>
-				<uni-list>
-					<uni-section title="考研倒计时" type="line"></uni-section>
-				</uni-list>
+				<uni-section title="考研倒计时" type="line"></uni-section>
 			</template>
 			<view class="kaoyan_text">
 				距离2023年考研还有:
@@ -42,7 +40,7 @@
 		</uni-card>
 
 		<view class="next_class">
-			<uni-card>
+			<uni-card class="card" :is-shadow="false">
 				<template v-slot:title>
 					<uni-section title="下一节课" type="line"></uni-section>
 				</template>
@@ -70,11 +68,9 @@
 		</view>
 
 		<view class="saying">
-			<uni-card>
+			<uni-card class="card" :is-shadow="false">
 				<template v-slot:title>
-					<uni-list>
-						<uni-section title="每日诗词" type="line"></uni-section>
-					</uni-list>
+					<uni-section title="每日诗词" type="line"></uni-section>
 				</template>
 				<view class="saying">
 					<text>{{saying}}</text>
@@ -86,11 +82,9 @@
 		</view>
 
 		<view class="weather">
-			<uni-card>
+			<uni-card class="card" :is-shadow="false">
 				<template v-slot:title>
-					<uni-list>
-						<uni-section title="今明天气" type="line"></uni-section>
-					</uni-list>
+					<uni-section title="今明天气" type="line"></uni-section>
 				</template>
 				<view class="split">
 					<view class="item">
@@ -257,6 +251,29 @@
 			},
 			bindIcon: function(icon) {
 				return '../../static/weather/' + icon + '.svg';
+			},
+			//获取yyyy-MM-dd hh:mm时间
+			getTime: function() {
+				var now = new Date();
+				var year = now.getFullYear(); //得到年份
+				var month = now.getMonth(); //得到月份
+				var date = now.getDate(); //得到日期
+				var day = now.getDay(); //得到周几
+				var hour = now.getHours(); //得到小时
+				var minu = now.getMinutes(); //得到分钟
+				var sec = now.getSeconds(); //得到秒
+				month = month + 1;
+				if (month < 10) month = "0" + month;
+				if (date < 10) date = "0" + date;
+				if (hour < 10) hour = "0" + hour;
+				if (minu < 10) minu = "0" + minu;
+				if (sec < 10) sec = "0" + sec;
+				var time = "";
+				//精确到天
+				time = year + "-" + month + "-" + date + " " + hour + ":" + minu;
+				// return time;
+				console.log(time)
+				return time
 			}
 		}
 	}
@@ -325,6 +342,10 @@
 		display: block;
 		text-align: center;
 		margin-top: 10px;
+	}
+
+	.card {
+		border-radius: 15px;
 	}
 
 	.weather_number {

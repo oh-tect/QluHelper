@@ -24,7 +24,7 @@
 			</uni-card>
 		</uni-card>
 
-		<uni-card>
+		<uni-card class="card">
 			<template v-slot:title>
 				<uni-section type="line" :title="originDate + ' ' + orginTime + '节'"></uni-section>
 			</template>
@@ -96,6 +96,9 @@
 			this.value.push(this.list[0][0]);
 			this.value.push(this.list[1][0]);
 			this.originDate = this.list[0][0];
+			let dates = new Date(getApp().globalData.date);
+			this.date = this.$mydate.getNowFormatDate(dates);
+			this.idleTime = '0102';
 			let token = uni.getStorageSync('token');
 			this.getAllClassroom(token);
 		},
@@ -124,8 +127,6 @@
 				this.date = this.$mydate.getNowFormatDate(dates);
 				console.log(this.date);
 				let token = uni.getStorageSync('token');
-				this.firstTeachingBuilding = [];
-				this.secondTeachingBuilding = [];
 				this.getAllClassroom(token);
 			},
 			radiochange: function(e) {
@@ -136,7 +137,6 @@
 				this.firstTeachingBuilding = [];
 				this.secondTeachingBuilding = [];
 				this.emptyClassroomList = [];
-				console.log("清除啦");
 				new Promise((resolve, reject) => {
 					try {
 						uni.request({
@@ -193,5 +193,9 @@
 		display: inline-block;
 		margin-top: 5px;
 		margin-left: 5px;
+	}
+
+	.card {
+		border-radius: 15px;
 	}
 </style>
