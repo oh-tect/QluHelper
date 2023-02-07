@@ -6,7 +6,7 @@
 			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
 		</u-tabbar>
 
-		<uni-card title="">
+		<uni-card title="" class="card" :is-shadow="false">
 			<template v-slot:title>
 				<uni-section title="学习" type="line"></uni-section>
 			</template>
@@ -20,7 +20,7 @@
 				<u-toast ref="uToast" />
 			</view>
 		</uni-card>
-		<uni-card>
+		<uni-card class="card" :is-shadow="false">
 			<template v-slot:title>
 				<uni-section title="生活" type="line"></uni-section>
 			</template>
@@ -178,5 +178,9 @@
 		/* #ifndef APP-PLUS */
 		box-sizing: border-box;
 		/* #endif */
+	}
+
+	.card {
+		border-radius: 15px;
 	}
 </style>
