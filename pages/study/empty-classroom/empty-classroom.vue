@@ -196,6 +196,6 @@
 	}
 
 	.card {
-		border-radius: 15px;
+		border-radius: 15px !important;
 	}
 </style>

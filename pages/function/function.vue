@@ -6,7 +6,7 @@
 			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
 		</u-tabbar>
 
-		<uni-card title="" class="card" :is-shadow="false">
+		<uni-card title="" class="card">
 			<template v-slot:title>
 				<uni-section title="学习" type="line"></uni-section>
 			</template>
@@ -20,12 +20,12 @@
 				<u-toast ref="uToast" />
 			</view>
 		</uni-card>
-		<uni-card class="card" :is-shadow="false">
+		<uni-card class="card">
 			<template v-slot:title>
 				<uni-section title="生活" type="line"></uni-section>
 			</template>
 
-			<u-grid :border="true" @click="click" col="3">
+			<u-grid :border="true" @click="click_live" col="3">
 				<u-grid-item v-for="(baseListItem,baseListIndex) in baselist2" :key="baseListIndex">
 					<u-icon :customStyle="{paddingTop:20+'rpx'}" :name="baseListItem.name" :size="22"></u-icon>
 					<text class="grid-text">{{baseListItem.title}}</text>
@@ -74,6 +74,10 @@
 					{
 						name: '/static/icon/expect.png',
 						title: '敬请期待'
+					},
+					{
+						name: '',
+						title: ''
 					}
 				]
 			}
@@ -103,7 +107,16 @@
 					}
 				}
 			},
-			click1: function() {},
+			click_life: function(e) {
+				switch (e) {
+					case 0: {
+						break;
+					}
+					case 1: {
+						break;
+					}
+				}
+			},
 			click: function(e) {
 				switch (e) {
 					case 0: {
@@ -181,6 +194,6 @@
 	}
 
 	.card {
-		border-radius: 15px;
+		border-radius: 15px !important;
 	}
 </style>

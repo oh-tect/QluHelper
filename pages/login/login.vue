@@ -167,9 +167,9 @@
 	}
 
 	.login {
-		margin-left: 20px;
-		margin-right: 20px;
-		margin-top: 40px;
+		margin-left: 20px !important;
+		margin-right: 20px !important;
+		margin-top: 40px !important;
 	}
 
 	.logo_div {
@@ -184,9 +184,9 @@
 
 	.username {
 		display: inline;
-		margin-top: 10px;
-		margin-left: 10px;
-		padding-bottom: 30px;
+		margin-top: 10px !important;
+		margin-left: 10px !important;
+		padding-bottom: 20px !important;
 	}
 
 	.label {
@@ -194,8 +194,8 @@
 	}
 
 	.password {
-		margin-top: 5px;
-		margin-bottom: 30px;
+		margin-top: 5px !important;
+		margin-bottom: 30px !important;
 	}
 
 	.button {

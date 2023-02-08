@@ -6,7 +6,7 @@
 			<u-tabbar-item text="功能" icon="photo" @click="click1"></u-tabbar-item>
 			<u-tabbar-item text="我的" icon="account" @click="click1"></u-tabbar-item>
 		</u-tabbar>
-		<uni-card class="card" :is-shadow="false">
+		<uni-card class="card">
 			<template v-slot:title>
 				<uni-section title="考研倒计时" type="line"></uni-section>
 			</template>
@@ -40,7 +40,7 @@
 		</uni-card>
 
 		<view class="next_class">
-			<uni-card class="card" :is-shadow="false">
+			<uni-card class="card">
 				<template v-slot:title>
 					<uni-section title="下一节课" type="line"></uni-section>
 				</template>
@@ -68,7 +68,7 @@
 		</view>
 
 		<view class="saying">
-			<uni-card class="card" :is-shadow="false">
+			<uni-card class="card">
 				<template v-slot:title>
 					<uni-section title="每日诗词" type="line"></uni-section>
 				</template>
@@ -82,7 +82,7 @@
 		</view>
 
 		<view class="weather">
-			<uni-card class="card" :is-shadow="false">
+			<uni-card class="card">
 				<template v-slot:title>
 					<uni-section title="今明天气" type="line"></uni-section>
 				</template>
@@ -345,7 +345,7 @@
 	}
 
 	.card {
-		border-radius: 15px;
+		border-radius: 15px !important;
 	}
 
 	.weather_number {
