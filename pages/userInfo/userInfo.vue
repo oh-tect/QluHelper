@@ -30,7 +30,7 @@
 			</uni-card>
 			<uni-card :is-shadow="false" is-full :border="false">
 				<uni-list>
-					<uni-list-item showArrow="true" title="关于此软件" @click="about" to="/pages/about/about">
+					<uni-list-item showArrow="true" title="关于此软件" to="/pages/about/about">
 					</uni-list-item>
 				</uni-list>
 			</uni-card>
