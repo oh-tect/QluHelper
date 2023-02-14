@@ -9,7 +9,7 @@ const getClassTable = async function(week, day, username, token) {
 				data: {
 					"xh": username,
 					"method": "getKbcxAzc",
-					"xnxqid": "2022-2023-1",
+					"xnxqid": "2022-2023-2",
 					"zc": week
 				},
 				header: {
@@ -47,7 +47,6 @@ const getClassTable = async function(week, day, username, token) {
 				},
 				complete: () => {
 
-					console.log("以获取课表");
 				}
 			});
 		});
@@ -62,9 +61,7 @@ const getPoem = async function() {
 			url: 'https://v1.jinrishici.com/all.json',
 			method: 'GET',
 			success: (e) => {
-				console.log(e);
 				getApp().globalData.saying = e.data['content'];
-				console.log(e.data['content']);
 				getApp().globalData.author = e.data['author'];
 				getApp().globalData.origin = e.data['origin'];
 				resolve();
@@ -95,7 +92,6 @@ const getWeather = function() {
 			success: (re) => {
 				for (let i of re.data['results'][0]['daily']) {
 					let data = [];
-					console.log(i.text_day);
 					data.push(i.text_day);
 					data.push(i.high);
 					data.push(i.low);
@@ -108,7 +104,6 @@ const getWeather = function() {
 					getApp().globalData.low.push(i[2]);
 					getApp().globalData.code.push(i[3]);
 				}
-				console.log(getApp().globalData.weather_data);
 			}
 		});
 	});

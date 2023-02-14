@@ -30,6 +30,9 @@ const getDay = (date) => {
 const getWeek = (date) => {
 	let before = new Date(getApp().globalData.start_date).getTime();
 	let after = new Date(date).getTime();
+	if (after - before < 0) {
+		return 0;
+	}
 	return parseInt((after - before) / (1000 * 60 * 60 * 24 * 7)) + 1;
 }
 
