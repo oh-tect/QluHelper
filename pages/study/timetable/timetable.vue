@@ -56,7 +56,7 @@
 			classCard
 		},
 		onShow() {
-			let dates = new Date(getApp().globalData.date);
+			let dates = new Date();
 			this.date = this.$mydate.getNowFormatDate(dates);
 			this.week = this.$mydate.getWeek(this.date);
 			this.day = this.$mydate.getDay(this.date);
@@ -98,7 +98,7 @@
 							data: {
 								"xh": username,
 								"method": "getKbcxAzc",
-								"xnxqid": "2022-2023-1",
+								"xnxqid": "2022-2023-2",
 								"zc": week
 							},
 							header: {
@@ -120,7 +120,11 @@
 											list.push(item['kcmc']);
 											let time = item['kssj'] + '-' + item['jssj'];
 											list.push(time);
-											list.push(item['jsmc']);
+											if (item['jsmc'] == null) {
+												list.push("操场");
+											} else {
+												list.push(item['jsmc']);
+											}
 											a.classes.push(list);
 										}
 									}
@@ -131,7 +135,6 @@
 							},
 							complete: () => {
 								this.isLoading = false;
-								console.log(this.isLoading);
 							},
 						});
 					});

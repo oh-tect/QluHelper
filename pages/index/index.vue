@@ -141,7 +141,7 @@
 				weather_data: [],
 				getDate: '',
 				//当前日期，测试在这里修改
-				date: '2022-11-22 10:45',
+				date: '',
 				//当前日期是第几周
 				week: '',
 				//当前日期是星期几
@@ -185,21 +185,23 @@
 			this.code = getApp().globalData.code;
 			this.weather_data = getApp().globalData.weather_data;
 			//加载下一节课及初始化
-			// this.date = this.$mydate.getNowFormatDate();
+			let dates = new Date();
+			this.date = this.$mydate.getNowFormatDate(dates);
+			console.log("今天是" + this.date);
 			this.week = this.$mydate.getWeek(this.date);
+			console.log(this.week + "周");
 			this.day = this.$mydate.getDay(this.date);
 			this.token = uni.getStorageSync('token');
-			console.log(this.token);
 			if (this.token == -1 || uni.getStorageSync('isLogin') == 0) {
 				console.log("没有登录");
 				getApp().globalData.isLogin = 0;
 			} else {
 				this.username = uni.getStorageSync('username');
-
 				await this.$requests.getClassTable(this.week, this.day, this.username, this.token);
 				console.log(getApp().globalData.classes);
 				//获取下一节课信息
-				console.log(getApp().globalData.classes.length)
+				console.log("今天课数 " +
+					getApp().globalData.classes.length)
 				this.hasClass = getApp().globalData.hasClass;
 				if (getApp().globalData.classes != null) {
 					for (let item of getApp().globalData.classes) {

@@ -53,5 +53,8 @@
 
 	.text {
 		color: #f5f6fa;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>

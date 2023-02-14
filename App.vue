@@ -9,7 +9,7 @@
 			version: 'alpha 0.0.1',
 			notification: 0,
 			//开学日期
-			start_date: '2022-8-22',
+			start_date: '2023-2-20',
 			weather_data: [],
 			weather: [],
 			high: [],
@@ -19,7 +19,7 @@
 			author: '',
 			origin: '',
 			//选中日期
-			date: '2022-11-22',
+			date: '',
 			//选中日期是第几周
 			week: '',
 			//选中日期是星期几
@@ -38,7 +38,10 @@
 			uni.hideTabBar();
 		},
 		onShow: function() {
-			console.log('App Show')
+			console.log('App Show');
+			let dates = new Date();
+			this.date = this.$mydate.getNowFormatDate(dates);
+			console.log("程序运行开始时间:" + this.date);
 			uni.hideTabBar();
 		},
 		onHide: function() {

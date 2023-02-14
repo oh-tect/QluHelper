@@ -82,7 +82,7 @@
 			LbPicker
 		},
 		onLoad() {
-			let day = this.$mydate.getDay(getApp().globalData.date);
+			let day = this.$mydate.getDay(new Date());
 			console.log(day);
 			let days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 			let day_list = [];
@@ -96,7 +96,7 @@
 			this.value.push(this.list[0][0]);
 			this.value.push(this.list[1][0]);
 			this.originDate = this.list[0][0];
-			let dates = new Date(getApp().globalData.date);
+			let dates = new Date();
 			this.date = this.$mydate.getNowFormatDate(dates);
 			this.idleTime = '0102';
 			let token = uni.getStorageSync('token');
@@ -122,7 +122,7 @@
 						break;
 					}
 				}
-				let dates = new Date(getApp().globalData.date);
+				let dates = new Date();
 				dates.setDate(dates.getDate() + afterDays);
 				this.date = this.$mydate.getNowFormatDate(dates);
 				console.log(this.date);
