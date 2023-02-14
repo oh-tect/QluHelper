@@ -25,6 +25,7 @@ const getClassTable = async function(week, day, username, token) {
 						getApp().globalData.isEnd = true;
 						return;
 					} else {
+
 						let result = [];
 						for (let item of re.data) {
 							if (item['kcsj'][0] == day) {

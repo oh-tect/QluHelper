@@ -33,6 +33,7 @@ const getWeek = (date) => {
 	if (after - before < 0) {
 		return 0;
 	}
+
 	return parseInt((after - before) / (1000 * 60 * 60 * 24 * 7)) + 1;
 }
 
