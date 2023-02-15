@@ -28,6 +28,7 @@
 			classes: [],
 			username: '',
 			token: '',
+			tokenExpired: Boolean,
 			//学期是否结束
 			isEnd: Boolean,
 			hasClass: Boolean,

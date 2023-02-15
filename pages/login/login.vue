@@ -104,6 +104,11 @@
 								});
 								setTimeout(() => {
 									getApp().globalData.isLogin = 1;
+									getApp().globalData.tokenExpired = false;
+									uni.setStorageSync("updateTime", new Date().getTime() +
+										24 * 60 * 60 * 1000);
+									console.log("已设置更新时间：" + uni.getStorageSync(
+										"updateTime"));
 									uni.setStorageSync('isLogin', 1);
 									uni.switchTab({
 										url: '/pages/index/index'

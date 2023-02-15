@@ -1,6 +1,8 @@
 <template>
 	<view>
 		<!-- <image class="logo" src="/static/logo.png"></image> -->
+		<!--用于显示模态框 -->
+		<u-modal :show="show" @cancel="cancel" @confirm="refresh" :content='content' :showCancelButton="true"></u-modal>
 		<u-tabbar :value="value1" @change="change1" :fixed="true" :placeholder="false" :safeAreaInsetBottom="true">
 			<u-tabbar-item text="首页" icon="home" @click="click1"></u-tabbar-item>
 			<u-tabbar-item text="功能" icon="photo" @click="click1"></u-tabbar-item>
@@ -160,6 +162,10 @@
 				isEnd: false,
 				//是否有课
 				hasClass: Boolean,
+				//是否显示模态框
+				show: false,
+				//模态框显示内容
+				content: "Token更新失败，请连接校园网后点击“确定”重试。"
 			}
 		},
 		computed: {
@@ -172,6 +178,31 @@
 			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
+			//判定token是否过期
+			if (new Date().getTime() - uni.getStorageSync("updateTime") > 0 && uni.getStorageSync('isLogin')) {
+				console.log("[token过期，尝试更新token]");
+				setTimeout(() => {
+					var re = this.$_tokens.mytoken.refreshToken();
+					if (!re) {
+						this.show = true;
+						console.log("token过期,已弹出模态框");
+					} else {
+						this.show = false;
+						uni.showToast({
+							title: "token更新成功",
+							duration: 3000,
+							icon: 'none'
+						});
+						setTimeout(() => {
+							//更新时间更新,在当前时间基础上再加一天
+							uni.setStorageSync("updateTime", new Date().getTime() +
+								24 * 60 * 60 * 1000);
+						}, 6000);
+					}
+				}, 1000);
+			} else if (uni.getStorageSync('isLogin') && new Date().getTime() - uni.getStorageSync("updateTime") < 0) {
+				console.log("token还没过期");
+			}
 			//加载诗词
 			await this.$requests.getPoem();
 			this.saying = getApp().globalData.saying;
@@ -193,7 +224,7 @@
 			this.day = this.$mydate.getDay(this.date);
 			this.token = uni.getStorageSync('token');
 			if (this.token == -1 || uni.getStorageSync('isLogin') == 0) {
-				console.log("没有登录");
+				console.log("没有登录或token过期");
 				getApp().globalData.isLogin = 0;
 			} else {
 				this.username = uni.getStorageSync('username');
@@ -229,7 +260,6 @@
 			cli: function() {
 				console.log('测试');
 			},
-
 			click1: function(e) {
 				if (e === 1) {
 					uni.switchTab({
@@ -276,6 +306,33 @@
 				// return time;
 				console.log(time)
 				return time
+			},
+			//弹出模态框后的刷新token
+			refresh: async function() {
+				let re = await this.$_tokens.mytoken.refreshToken();
+				if (!re) {
+					this.show = false;
+					uni.showToast({
+						title: "请确定是否连接校园网，或者退出重新登录",
+						duration: 3000,
+						icon: 'none'
+					});
+				} else {
+					this.show = false;
+					uni.showToast({
+						title: "token更新成功",
+						duration: 3000,
+						icon: 'none'
+					});
+					setTimeout(() => {
+						//更新时间更新
+						uni.setStorageSync("updateTime", new Date().getTime() +
+							24 * 60 * 60 * 1000);
+					}, 6000);
+				}
+			},
+			cancel: function() {
+				this.show = false;
 			}
 		}
 	}
