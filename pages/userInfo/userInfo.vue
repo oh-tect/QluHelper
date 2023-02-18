@@ -23,16 +23,12 @@
 					<uni-list-item title='专业:'>
 						<text slot="footer">{{major}}</text>
 					</uni-list-item>
+					<uni-list-item showArrow="true" title="关于此软件" to="/pages/about/about">
+					</uni-list-item>
 				</uni-list>
 				<wButton text="退出登录" rotate="false" style="margin-top: 10px;" bgColor="rgb(94, 121, 135)"
 					fontColor="#FFFFFF" @click.native="logout()">
 				</wButton>
-			</uni-card>
-			<uni-card :is-shadow="false" is-full :border="false">
-				<uni-list>
-					<uni-list-item showArrow="true" title="关于此软件" to="/pages/about/about">
-					</uni-list-item>
-				</uni-list>
 			</uni-card>
 			<uni-card :is-shadow="false">
 				<template v-slot:title>

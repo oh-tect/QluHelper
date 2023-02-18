@@ -178,36 +178,46 @@
 			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
+
 			//判定token是否过期
 			if (new Date().getTime() - uni.getStorageSync("updateTime") > 0 && uni.getStorageSync('isLogin')) {
 				console.log("[token过期，尝试更新token]");
-				setTimeout(() => {
-					var re = this.$_tokens.mytoken.refreshToken();
-					if (!re) {
-						this.show = true;
-						console.log("token过期,已弹出模态框");
-					} else {
-						this.show = false;
-						uni.showToast({
-							title: "token更新成功",
-							duration: 3000,
-							icon: 'none'
-						});
-						setTimeout(() => {
-							//更新时间更新,在当前时间基础上再加一天
-							uni.setStorageSync("updateTime", new Date().getTime() +
-								24 * 60 * 60 * 1000);
-						}, 6000);
+				let network = '';
+				//获取当前网络状态
+				uni.getNetworkType({
+					success: (re) => {
+						network = re.networkType;
 					}
-				}, 1000);
+				});
+				console.log(network);
+				//网络不是wifi则判定没有连接校园网（忽略连接热点情况）
+				if (network == 'wifi') {
+					this.show = false;
+					this.$_tokens.mytoken.refreshToken();
+					uni.showToast({
+						title: "token更新成功",
+						duration: 3000,
+						icon: 'none'
+					});
+					setTimeout(() => {
+						//更新时间更新,在当前时间基础上再加一天
+						uni.setStorageSync("updateTime", new Date().getTime() +
+							24 * 60 * 60 * 1000);
+					}, 6000);
+				} else {
+					this.show = true;
+					console.log("token过期,已弹出模态框");
+				}
 			} else if (uni.getStorageSync('isLogin') && new Date().getTime() - uni.getStorageSync("updateTime") < 0) {
 				console.log("token还没过期");
 			}
+
 			//加载诗词
 			await this.$requests.getPoem();
 			this.saying = getApp().globalData.saying;
 			this.author = getApp().globalData.author;
 			this.origin = getApp().globalData.origin;
+
 			//加载天气
 			this.$requests.getWeather();
 			this.weather = getApp().globalData.weather;
@@ -215,6 +225,7 @@
 			this.low = getApp().globalData.low;
 			this.code = getApp().globalData.code;
 			this.weather_data = getApp().globalData.weather_data;
+
 			//加载下一节课及初始化
 			let dates = new Date();
 			this.date = this.$mydate.getNowFormatDate(dates);
@@ -223,6 +234,7 @@
 			console.log(this.week + "周");
 			this.day = this.$mydate.getDay(this.date);
 			this.token = uni.getStorageSync('token');
+			//如果token为-1（过期）或没有登录
 			if (this.token == -1 || uni.getStorageSync('isLogin') == 0) {
 				console.log("没有登录或token过期");
 				getApp().globalData.isLogin = 0;
@@ -234,6 +246,7 @@
 				console.log("今天课数 " +
 					getApp().globalData.classes.length)
 				this.hasClass = getApp().globalData.hasClass;
+				//如果课程列表里不为空，则说明有课
 				if (getApp().globalData.classes != null) {
 					for (let item of getApp().globalData.classes) {
 						let start = String(item[1]).slice(0, 5);
@@ -309,16 +322,17 @@
 			},
 			//弹出模态框后的刷新token
 			refresh: async function() {
-				let re = await this.$_tokens.mytoken.refreshToken();
-				if (!re) {
+				var re = this.$_tokens.mytoken.refreshToken();
+				let network = '';
+				uni.getNetworkType({
+					success: (re) => {
+						network = re.networkType;
+					}
+				});
+				console.log(network);
+				if (network == 'wifi') {
 					this.show = false;
-					uni.showToast({
-						title: "请确定是否连接校园网，或者退出重新登录",
-						duration: 3000,
-						icon: 'none'
-					});
-				} else {
-					this.show = false;
+					this.$_tokens.mytoken.refreshToken();
 					uni.showToast({
 						title: "token更新成功",
 						duration: 3000,
@@ -329,11 +343,19 @@
 						uni.setStorageSync("updateTime", new Date().getTime() +
 							24 * 60 * 60 * 1000);
 					}, 6000);
+				} else {
+					this.show = false;
+					uni.showToast({
+						title: "请确定是否连接校园网，或者退出重新登录",
+						duration: 3000,
+						icon: 'none'
+					});
 				}
 			},
 			cancel: function() {
 				this.show = false;
-			}
+			},
+
 		}
 	}
 </script>
@@ -362,6 +384,7 @@
 
 	.time_custom {
 		display: flex;
+
 		justify-content: center;
 		align-items: center;
 		color: #f5f6fa;

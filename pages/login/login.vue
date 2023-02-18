@@ -11,7 +11,7 @@
 			<view class="logo_div">
 				<image src="/static//icon/ic_launcher_proc_transparent.jpg" class="logo"></image>
 			</view>
-			<view class="username" style="border-radius: 20px;">
+			<view class="username">
 				<wInput v-model="username" type="text" placeholder="请输入学号" focus> </wInput>
 				</uni-easyinput>
 			</view>
@@ -40,6 +40,11 @@
 		},
 		onLoad() {
 			uni.hideTabBar();
+		},
+		computed: {
+			windowsHeight: function() {
+				return uni.getSystemInfoSync().windowHeight;
+			}
 		},
 		methods: {
 			change1: function(e) {
@@ -189,7 +194,7 @@
 
 	.username {
 		display: inline;
-		margin-top: 10px !important;
+		/* margin-top: 10px !important; */
 		margin-left: 10px !important;
 		padding-bottom: 20px !important;
 	}
