@@ -1,6 +1,6 @@
 //获取考研日期
 const getKaoyan_date = (date) => {
-	return Date.parse(new Date(date + '-11-08')) - Date.parse(new Date());
+	return Date.parse(new Date(date + '-12-25')) - Date.parse(new Date());
 }
 
 //获取季度

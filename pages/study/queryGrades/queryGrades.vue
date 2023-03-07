@@ -179,7 +179,7 @@
 					}
 					console.log("学分总和为 " + sum);
 					//保留一位小数
-					return (sumGPA / sum).toFixed(1);
+					return (sumGPA / sum).toFixed(2);
 				}
 			},
 			getGrades: function(semester) {

@@ -25,8 +25,8 @@ const getClassTable = async function(week, day, username, token) {
 						getApp().globalData.isEnd = true;
 						return;
 					} else {
-
 						let result = [];
+						console.log(re.data);
 						for (let item of re.data) {
 							if (item['kcsj'][0] == day) {
 								let list = [];
@@ -37,10 +37,9 @@ const getClassTable = async function(week, day, username, token) {
 								result.push(list);
 							}
 						}
-
 						getApp().globalData.classes = result;
-
-						if (getApp().globalData.classes.length === 0) {
+						uni.setStorageSync("todayClasses", result);
+						if (uni.getStorageSync("todayClasses").length === 0) {
 							getApp().globalData.hasClass = false;
 						}
 					}

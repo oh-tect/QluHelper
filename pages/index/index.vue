@@ -13,7 +13,7 @@
 				<uni-section title="考研倒计时" type="line"></uni-section>
 			</template>
 			<view class="kaoyan_text">
-				距离2023年考研还有:
+				2024年考研倒计时
 			</view>
 
 			<!-- 24 * 60 * 60 * 1000 * 365 24924673000-->
@@ -46,7 +46,8 @@
 				<template v-slot:title>
 					<uni-section title="下一节课" type="line"></uni-section>
 				</template>
-				<view v-if="hasClass && token != -1">
+				<!--只有今天有课，已登录并且当前时间有课-->
+				<view v-if="hasClass && token != -1 && nowHasClass == true">
 					<u-row class="">
 						<u-col span="7">
 							<uni-section v-bind:title="nextClassName" v-bind:subTitle="nextClassTime"
@@ -58,14 +59,19 @@
 						</u-col>
 					</u-row>
 				</view>
+				<!--没有登录的情况-->
 				<view v-else-if="(token == -1 || token == null || token == ' ')">
 					<view style="text-align: center; margin: 20px 0 20px 0;">
 						<text>登录后获取信息....</text>
 					</view>
 				</view>
-				<view v-else style="text-align: center; margin: 20px 0 20px 0;">
+				<view v-else-if="nowHasClass == false" style="text-align: center; margin: 20px 0 20px 0;">
 					<text>今天没有课咯~ (≧ω≦)</text>
 				</view>
+				<view v-else-if="day != dayBeforeUpdate" style="text-align: center; margin: 20px 0 20px 0;">
+					<text>课表需要更新，请连接校园网后更新。</text>
+				</view>
+
 			</uni-card>
 		</view>
 
@@ -158,10 +164,13 @@
 				nextClassName: '',
 				nextClassTime: '',
 				nextClassPosition: '',
+				//更新课表前的日期，用于判断是否课表数据是否过期（非wifi环境无法更新课表）
+				dayBeforeUpdate: '',
 				//学期是否结束
 				isEnd: false,
 				//是否有课
 				hasClass: Boolean,
+				nowHasClass: false,
 				//是否显示模态框
 				show: false,
 				//模态框显示内容
@@ -178,11 +187,10 @@
 			console.log("是否登录:" + uni.getStorageSync('isLogin'));
 			this.getDate = this.$mydate.getKaoyan_date('2023');
 			this.saying = '加载中...';
-
+			var network = '';
 			//判定token是否过期
 			if (new Date().getTime() - uni.getStorageSync("updateTime") > 0 && uni.getStorageSync('isLogin')) {
 				console.log("[token过期，尝试更新token]");
-				let network = '';
 				//获取当前网络状态
 				uni.getNetworkType({
 					success: (re) => {
@@ -209,6 +217,12 @@
 					console.log("token过期,已弹出模态框");
 				}
 			} else if (uni.getStorageSync('isLogin') && new Date().getTime() - uni.getStorageSync("updateTime") < 0) {
+				uni.getNetworkType({
+					success: (re) => {
+						network = re.networkType;
+					}
+				});
+				console.log(network);
 				console.log("token还没过期");
 			}
 
@@ -225,7 +239,6 @@
 			this.low = getApp().globalData.low;
 			this.code = getApp().globalData.code;
 			this.weather_data = getApp().globalData.weather_data;
-
 			//加载下一节课及初始化
 			let dates = new Date();
 			this.date = this.$mydate.getNowFormatDate(dates);
@@ -240,26 +253,37 @@
 				getApp().globalData.isLogin = 0;
 			} else {
 				this.username = uni.getStorageSync('username');
-				await this.$requests.getClassTable(this.week, this.day, this.username, this.token);
-				console.log(getApp().globalData.classes);
+				//如果当前环境是校园网，可以进行课表更新。
+				if (network == 'wifi') {
+					await this.$requests.getClassTable(this.week, this.day, this.username, this.token);
+					console.log(uni.getStorageSync("todayClasses"));
+					//更新课表更新时间。
+					this.dayBeforeUpdate = this.day;
+				}
 				//获取下一节课信息
 				console.log("今天课数 " +
-					getApp().globalData.classes.length)
+					uni.getStorageSync("todayClasses").length);
 				this.hasClass = getApp().globalData.hasClass;
-				//如果课程列表里不为空，则说明有课
-				if (getApp().globalData.classes != null) {
-					for (let item of getApp().globalData.classes) {
+				//如果课程列表里不为空，则说明有课。
+				if (uni.getStorageSync("todayClasses") != null) {
+					this.nowHasClass = false;
+					//遍历当日课表，寻找距离最近的下一节课
+					console.log(uni.getStorageSync("todayClasses"));
+					console.log(getApp().globalData.classes);
+					for (let item of uni.getStorageSync("todayClasses")) {
 						let start = String(item[1]).slice(0, 5);
 						let date = this.date.slice(0, 10) + ' ' + start;
 						let startTimeStamp = new Date(date).getTime();
-						if (new Date(this.date).getTime() - startTimeStamp < 0) {
+						if (new Date().getTime() - startTimeStamp < 0) {
 							this.nextClassName = item[0];
 							this.nextClassTime = item[1];
 							this.nextClassPosition = item[2];
 							this.hasClass = true;
+							this.nowHasClass = true;
 							break;
 						}
 					}
+					console.log(this.nowHasClass);
 					if (!getApp().globalData.hasClass) {
 						console.log("没有课啦")
 					} else {
