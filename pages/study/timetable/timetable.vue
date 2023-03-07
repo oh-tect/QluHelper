@@ -55,7 +55,7 @@
 		components: {
 			classCard
 		},
-		onShow() {
+		onLoad() {
 			let dates = new Date();
 			this.date = this.$mydate.getNowFormatDate(dates);
 			this.week = this.$mydate.getWeek(this.date);
@@ -66,6 +66,12 @@
 			});
 			this.username = uni.getStorageSync("username");
 			this.token = uni.getStorageSync("token");
+			var network = '';
+			uni.getNetworkType({
+				success(re) {
+					network = re.networkType;
+				}
+			});
 			this.getClassTable(this.week, this.day, this.username, this.token);
 		},
 		methods: {
@@ -114,6 +120,7 @@
 									this.isEnd = true;
 									return;
 								} else {
+									uni.setStorageSync("classOfWeeks", re);
 									for (let item of re.data) {
 										if (item['kcsj'][0] == day) {
 											let list = [];
