@@ -28,13 +28,37 @@
 			<template v-slot:title>
 				<uni-section type="line" :title="originDate + ' ' + orginTime + '节'"></uni-section>
 			</template>
-			<uni-section type="circle" title="1号公教楼"></uni-section>
-			<view v-for="(item, index) in firstTeachingBuilding" :key="Math.random()" class="tag">
-				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
-			</view>
-			<uni-section type="circle" title="2号公教楼"></uni-section>
-			<view v-for="(item, index) in secondTeachingBuilding" :key="Math.random()" class="tag">
-				<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+			<view class="re">
+				<view class="class_item">
+					<uni-section type="circle" title="1号公教楼" padding="-10px"></uni-section>
+					<view v-for="(item, index) in firstTeachingBuilding" :key="Math.random()" class="tag">
+						<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+					</view>
+				</view>
+				<view class="class_item">
+					<uni-section type="circle" title="2号公教楼" padding="-10px"></uni-section>
+					<view v-for="(item, index) in secondTeachingBuilding" :key="Math.random()" class="tag">
+						<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+					</view>
+				</view>
+				<view class="class_item">
+					<uni-section type="circle" title="文科楼"></uni-section>
+					<view v-for="(item, index) in wenkeBuilding" :key="Math.random()" class="tag">
+						<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+					</view>
+				</view>
+				<view class="class_item">
+					<uni-section type="circle" title="食品化工楼"></uni-section>
+					<view v-for="(item, index) in shigongBuilding" :key="Math.random()" class="tag">
+						<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+					</view>
+				</view>
+				<view class="class_item">
+					<uni-section type="circle" title="轻化楼"></uni-section>
+					<view v-for="(item, index) in qinghuaBuilding" :key="Math.random()" class="tag">
+						<uni-tag :text="item" size="mini" type="primary"></uni-tag>
+					</view>
+				</view>
 			</view>
 		</uni-card>
 	</view>
@@ -76,12 +100,16 @@
 				radiovalue1: '长清校区',
 				firstTeachingBuilding: [],
 				secondTeachingBuilding: [],
+				wenkeBuilding: [],
+				shigongBuilding: [],
+				qinghuaBuilding: []
 			}
 		},
 		components: {
 			LbPicker
 		},
 		onLoad() {
+			//生成从今天起七天以内的星期
 			let day = this.$mydate.getDay(new Date());
 			console.log(day);
 			let days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
@@ -134,9 +162,13 @@
 			},
 			getAllClassroom: function(token) {
 				var that = this;
+				//清空原有内容
 				this.firstTeachingBuilding = [];
 				this.secondTeachingBuilding = [];
 				this.emptyClassroomList = [];
+				this.qinghuaBuilding = [];
+				this.shigongBuilding = [];
+				this.wenkeBuilding = [];
 				new Promise((resolve, reject) => {
 					try {
 						uni.request({
@@ -158,7 +190,10 @@
 									for (let item of re.data) {
 										if (String(item['jxl']) === '长清校区-1号公教楼' || String(item[
 												'jxl']) ===
-											'长清校区-2号公教楼') {
+											'长清校区-2号公教楼' || String(item['jxl']) === '长清校区-文科楼' ||
+											String(item['jxl']) === '长清校区-食工楼' || String(item[
+												'jxl']) ===
+											'长清校区-轻化楼') {
 											for (let items of item['jsList']) {
 												that.emptyClassroomList.push(items['jsmc']);
 											}
@@ -166,12 +201,21 @@
 									}
 									for (let item of that.emptyClassroomList) {
 										if (String(item).includes("1号公教楼")) {
-											that.firstTeachingBuilding.push(String(item).substring(
-												5));
-										} else {
+											that.firstTeachingBuilding.push(String(item)
+												.substring(
+													5));
+										} else if (String(item).includes("2号公教楼")) {
 											that.secondTeachingBuilding.push(String(item)
 												.substring(
 													5));
+										} else if (String(item).includes("文科楼")) {
+											that.wenkeBuilding.push(String(item).substring(3));
+										} else if (String(item).includes("食品化工楼")) {
+											that.shigongBuilding.push(String(item).substring(
+												5));
+										} else if (String(item).includes("轻化楼")) {
+											that.qinghuaBuilding.push(String(item).substring(
+												3));
 										}
 									}
 								}
@@ -181,6 +225,7 @@
 						//TODO handle the exception
 					}
 				});
+
 			}
 		}
 	}
@@ -197,5 +242,13 @@
 
 	.card {
 		border-radius: 15px !important;
+	}
+
+	.re {
+		margin-bottom: 10px;
+	}
+
+	.class_item {
+		margin-bottom: 10px;
 	}
 </style>
