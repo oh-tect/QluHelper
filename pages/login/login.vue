@@ -73,7 +73,7 @@
 			login_race: function() {
 				return new Promise((resolve, reject) => {
 					uni.request({
-						url: 'http://jwxt.qlu.edu.cn/app.do',
+						url: 'http://47.115.221.159:48000/app.do',
 						method: 'GET',
 						data: {
 							'method': 'authUser',
